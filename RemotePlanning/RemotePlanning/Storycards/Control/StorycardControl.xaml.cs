@@ -25,7 +25,7 @@ namespace RemotePlanning.Storycards.Control
             Canvas.SetLeft(this, newLeft);
             Canvas.SetTop(this, newTop);
 
-            Raise_StorycardMoved(new StorycardMovedEventArgs());
+            Raise_StorycardMoved(new StorycardMovedEventArgs(this));
         }
 
         private void Raise_StorycardMoved(StorycardMovedEventArgs storycardMovedEventArgs)
@@ -36,5 +36,11 @@ namespace RemotePlanning.Storycards.Control
 
     public class StorycardMovedEventArgs : EventArgs
     {
+        public StorycardMovedEventArgs(StorycardControl storycardControl)
+        {
+            StorycardControl = storycardControl;
+        }
+
+        public StorycardControl StorycardControl { get; private set; }
     }
 }

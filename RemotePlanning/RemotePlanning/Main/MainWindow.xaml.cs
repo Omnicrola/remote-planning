@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -57,30 +58,60 @@ namespace RemotePlanning
                 .Cast<UIElement>()
                 .OfType<PlanningSheetControl>()
                 .ToList()
-                .ForEach(c => c.PlanningSheetMoved -= ReorderSheets);
+                .ForEach(c => c.PlanningSheetMoved -= ReorderPlanningSheets);
             GameCanvas.Children.Clear();
         }
 
-        private void ReorderSheets(object sender, PlanningSheetMovedArgs e)
+        private void ReorderPlanningSheets(object sender, PlanningSheetMovedArgs e)
         {
             var lasControlToMove = e.PlanningSheetControl;
             int zIndex = 1;
-            GameCanvas.Children
-                .Cast<UIElement>()
-                .OfType<PlanningSheetControl>()
-                .OrderBy(Canvas.GetZIndex)
-                .ToList()
+            GetAllPlanningSheetControls()
                 .ForEach(c =>
                 {
                     if (c == lasControlToMove)
                     {
-                        Canvas.SetZIndex(c, 999);
+                        Canvas.SetZIndex(c, 99);
                     }
                     else
                     {
                         Canvas.SetZIndex(c, zIndex++);
                     }
                 });
+        }
+        private void ReorderStorycards(object sender, StorycardMovedEventArgs e)
+        {
+            var lasControlToMove = e.StorycardControl;
+            int zIndex = 101;
+            GetAllStorycardControls()
+                 .ForEach(c =>
+                 {
+                     if (c == lasControlToMove)
+                     {
+                         Canvas.SetZIndex(c, 999);
+                     }
+                     else
+                     {
+                         Canvas.SetZIndex(c, zIndex++);
+                     }
+                 });
+        }
+
+        private List<PlanningSheetControl> GetAllPlanningSheetControls()
+        {
+            return GameCanvas.Children
+                .Cast<UIElement>()
+                .OfType<PlanningSheetControl>()
+                .OrderBy(Canvas.GetZIndex)
+                .ToList();
+        }
+        private List<StorycardControl> GetAllStorycardControls()
+        {
+            return GameCanvas.Children
+                .Cast<UIElement>()
+                .OfType<StorycardControl>()
+                .OrderBy(Canvas.GetZIndex)
+                .ToList();
         }
 
         private void PlanningSheets_OnChange(object sender, NotifyCollectionChangedEventArgs e)
@@ -95,6 +126,7 @@ namespace RemotePlanning
         private void AddStoryCard(PlacedStorycardViewModel storycardViewModel)
         {
             var storycardControl = new StorycardControl() { DataContext = storycardViewModel };
+            storycardControl.StorycardMoved += ReorderStorycards;
             Canvas.SetTop(storycardControl, new Random().Next(10, 500));
             Canvas.SetLeft(storycardControl, new Random().Next(10, 500));
             GameCanvas.Children.Add(storycardControl);
@@ -103,7 +135,7 @@ namespace RemotePlanning
         private void AddPlanningSheet(PlanningSheetViewModel planningSheetViewModel)
         {
             var planningSheetControl = new PlanningSheetControl() { DataContext = planningSheetViewModel };
-            planningSheetControl.PlanningSheetMoved += ReorderSheets;
+            planningSheetControl.PlanningSheetMoved += ReorderPlanningSheets;
             Canvas.SetTop(planningSheetControl, new Random().Next(10, 500));
             Canvas.SetLeft(planningSheetControl, new Random().Next(10, 500));
             GameCanvas.Children.Add(planningSheetControl);
