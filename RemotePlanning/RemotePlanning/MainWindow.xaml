@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemotePlanning"
+        xmlns:userControl="clr-namespace:RemotePlanning.Storycards.UserControl"
         mc:Ignorable="d"
         Title="Remote Planning" 
         WindowStartupLocation="CenterScreen"
@@ -11,6 +12,14 @@
         Height="350" 
         Width="525">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Canvas >
+            <userControl:Storycard></userControl:Storycard>
+            <userControl:Storycard></userControl:Storycard>
+        </Canvas>
+        <StatusBar Grid.Row="1"></StatusBar>
     </Grid>
 </Window>
