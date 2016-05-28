@@ -51,12 +51,18 @@ namespace RemotePlanning
 
         private void SelectIteration_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectIterationWindow = new SelectIterationWindow()
+            var selectIterationWindow = new SelectIterationWindow(new SelectIterationViewModel(ViewModel.SelectedProject.Iterations, ViewModel.SelectedIteration))
             {
                 Owner = this
             };
+            selectIterationWindow.SelectIteration += ChangeSelectedIteration;
             selectIterationWindow.ShowDialog();
 
+        }
+
+        private void ChangeSelectedIteration(object sender, SelectIterationEventArgs eventArgs)
+        {
+            ViewModel.SelectedIteration = eventArgs.SelectedIteration;
         }
     }
 }

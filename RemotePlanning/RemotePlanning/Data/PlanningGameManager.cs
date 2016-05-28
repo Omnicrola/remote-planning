@@ -23,17 +23,23 @@ namespace RemotePlanning.Data
             {
                 Name = "Bell",
             };
-            var iterationViewModel = new IterationViewModel
+            var iterationViewModel1 = new IterationViewModel
             {
-                EndDate = new DateTime(2016, 7, 7),
+                EndDate = new DateTime(2016, 7, 8),
+                IterationNumber = 6,
+            };
+            var iterationViewModel2 = new IterationViewModel
+            {
+                EndDate = new DateTime(2016, 7, 1),
                 IterationNumber = 5,
             };
             var planningSheetViewModel = new PlanningSheetViewModel
             {
                 Role = "DEV",
             };
-            iterationViewModel.PlanningSheets.Add(planningSheetViewModel);
-            projectViewModel.Iterations.Add(iterationViewModel);
+            iterationViewModel1.PlanningSheets.Add(planningSheetViewModel);
+            projectViewModel.Iterations.Add(iterationViewModel1);
+            projectViewModel.Iterations.Add(iterationViewModel2);
             var storycard1 = new StorycardViewModel
             {
                 Role = "DEV",
@@ -46,7 +52,7 @@ namespace RemotePlanning.Data
 
             _mainWindow.ViewModel.Projects.Add(projectViewModel);
             _mainWindow.ViewModel.SelectedProject = projectViewModel;
-            _mainWindow.ViewModel.SelectedIteration = iterationViewModel;
+            _mainWindow.ViewModel.SelectedIteration = iterationViewModel1;
         }
     }
 }
