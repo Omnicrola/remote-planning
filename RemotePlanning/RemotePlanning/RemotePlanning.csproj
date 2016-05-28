@@ -55,10 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Iteration\IterationViewModel.cs" />
+    <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
+    <Compile Include="Projects\ProjectViewModel.cs" />
     <Compile Include="Storycards\StorycardViewModel.cs" />
     <Compile Include="Storycards\UserControl\Storycard.xaml.cs">
       <DependentUpon>Storycard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -8,6 +8,11 @@
              Canvas.Left="1"
              Canvas.Top="1"
              Canvas.ZIndex="99"
+             MaxWidth="500"
+             MaxHeight="500"
+             BorderBrush="Black"
+             BorderThickness="2"
+             Background="AliceBlue"
              d:DesignWidth="500" d:DesignHeight="200">
     <UserControl.Resources>
 
@@ -15,7 +20,28 @@
     <Thumb DragDelta="Thumb_OnDragDelta">
         <Thumb.Template>
             <ControlTemplate>
-                <TextBlock Background="Crimson" FontSize="18">Hello!</TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock FontSize="18">Project</TextBlock>
+                        <TextBlock FontSize="18">Role</TextBlock>
+                    </StackPanel>
+                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="24" VerticalAlignment="Center" TextWrapping="Wrap">Title</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="32" HorizontalAlignment="Center">32</TextBlock>
+                    <TextBlock Grid.Row="1" 
+                               Grid.Column="0" 
+                               Margin="25,10,25,10"
+                               TextWrapping="Wrap"
+                               Grid.ColumnSpan="3">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</TextBlock>
+                </Grid>
             </ControlTemplate>
         </Thumb.Template>
     </Thumb>
