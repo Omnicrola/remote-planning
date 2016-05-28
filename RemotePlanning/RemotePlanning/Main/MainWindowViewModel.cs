@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using RemotePlanning.ViewModels;
 
 namespace RemotePlanning.Main
@@ -9,6 +12,8 @@ namespace RemotePlanning.Main
 
         private double _scaleX;
         private double _scaleY;
+        private double _offsetX;
+        private double _offsetY;
 
         public MainWindowViewModel()
         {
@@ -28,20 +33,45 @@ namespace RemotePlanning.Main
             set { SetPropertyField(ref _scaleY, value); }
         }
 
-        public void AdjustScale(int delta)
+        public double OffsetX
         {
-            Console.WriteLine("Delta: " + delta);
-            if (delta > 0)
+            get { return _offsetX; }
+            set { SetPropertyField(ref _offsetX, value); }
+        }
+
+        public double OffsetY
+        {
+            get { return _offsetY; }
+            set { SetPropertyField(ref _offsetY, value); }
+        }
+
+
+        public void AdjustScale(ScrollViewer zoomContainer, MouseWheelEventArgs mouseArgs)
+        {
+            var mousePosition = mouseArgs.GetPosition(zoomContainer);
+            double horizontalPercent = mousePosition.X / zoomContainer.ViewportWidth;
+            double verticalPercentage = mousePosition.Y / zoomContainer.ViewportHeight;
+
+            var deltaX = (zoomContainer.ViewportWidth * SCALE_RATE) - zoomContainer.ViewportWidth;
+            var deltaY = (zoomContainer.ViewportHeight * SCALE_RATE) - zoomContainer.ViewportHeight;
+
+            var offsetIncrmentX = deltaX * horizontalPercent;
+            var offsetIncrmentY = deltaY * verticalPercentage;
+            if (mouseArgs.Delta > 0)
             {
                 ScaleX *= SCALE_RATE;
                 ScaleY *= SCALE_RATE;
+                OffsetX -= offsetIncrmentX;
+                OffsetY -= offsetIncrmentY;
+
             }
             else
             {
                 ScaleX /= SCALE_RATE;
                 ScaleY /= SCALE_RATE;
+                OffsetX += offsetIncrmentX;
+                OffsetY += offsetIncrmentY;
             }
-            Console.WriteLine($"X: {ScaleX} Y:{ScaleY}");
         }
     }
 }

@@ -13,7 +13,7 @@
         WindowState="Maximized"
         Height="350" 
         Width="525">
-    <Grid>
+    <Grid x:Name="WindowPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="25"/>
@@ -23,10 +23,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ListView Grid.Row="0" Grid.Column="0"></ListView>
-        <ScrollViewer Grid.Row="0" Grid.Column="1">
-            <Canvas MouseWheel="Canvas_OnMouseWheel" Background="White">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+                      VerticalScrollBarVisibility="Disabled" 
+                      Grid.Column="1"
+                      x:Name="CanvasContainer">
+            <Canvas PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
                 <Canvas.RenderTransform>
-                    <ScaleTransform ScaleX="{Binding ScaleX}" ScaleY="{Binding ScaleY}"/>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="{Binding ScaleX}" ScaleY="{Binding ScaleY}"/>
+                        <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}"/>
+                    </TransformGroup>
                 </Canvas.RenderTransform>
                 <userControl:Storycard></userControl:Storycard>
             </Canvas>

@@ -17,9 +17,11 @@ namespace RemotePlanning
             DataContext = _mainWindowViewModel = new MainWindowViewModel();
         }
 
-        private void Canvas_OnMouseWheel(object sender, MouseWheelEventArgs e)
+        private void Canvas_OnMouseWheel(object sender, MouseWheelEventArgs mouseArgs)
         {
-            _mainWindowViewModel.AdjustScale(e.Delta);
+
+            _mainWindowViewModel.AdjustScale(CanvasContainer, mouseArgs);
+            mouseArgs.Handled = true;
         }
     }
 }
