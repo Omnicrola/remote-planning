@@ -36,8 +36,8 @@
             <Canvas x:Name="GameCanvas" PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
                 <Canvas.RenderTransform>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="{Binding ScaleX}" ScaleY="{Binding ScaleY}"/>
-                        <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}"/>
+                        <ScaleTransform ScaleX="{Binding ZoomViewModel.ScaleX}" ScaleY="{Binding ZoomViewModel.ScaleY}"/>
+                        <TranslateTransform X="{Binding ZoomViewModel.OffsetX}" Y="{Binding ZoomViewModel.OffsetY}"/>
                     </TransformGroup>
                 </Canvas.RenderTransform>
             </Canvas>
