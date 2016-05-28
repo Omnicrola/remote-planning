@@ -12,12 +12,14 @@
              MaxHeight="500"
              BorderBrush="Black"
              BorderThickness="2"
-             Background="AliceBlue"
              d:DesignWidth="500" d:DesignHeight="200">
     <UserControl.Resources>
-
+        <BitmapImage x:Key="NotecardImage" UriSource="../../Resources/Images/Notecard.jpg"/>
     </UserControl.Resources>
-    <Thumb DragDelta="Thumb_OnDragDelta">
+    <UserControl.Background>
+        <ImageBrush ImageSource="{StaticResource NotecardImage}"></ImageBrush>
+    </UserControl.Background>
+    <Thumb DragDelta="Thumb_OnDragDelta" >
         <Thumb.Template>
             <ControlTemplate>
                 <Grid>
@@ -31,11 +33,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock FontSize="18">ProjectName</TextBlock>
-                        <TextBlock FontSize="18">Role</TextBlock>
+                        <TextBlock FontSize="14">ProjectName</TextBlock>
+                        <TextBlock FontSize="14">Role</TextBlock>
                     </StackPanel>
-                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="24" VerticalAlignment="Center" TextWrapping="Wrap">Title</TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="32" HorizontalAlignment="Center">32</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">Title</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="28" HorizontalAlignment="Center">32</TextBlock>
                     <TextBlock Grid.Row="1" 
                                Grid.Column="0" 
                                Margin="25,10,25,10"

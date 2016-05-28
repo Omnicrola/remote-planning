@@ -57,8 +57,12 @@
     </ApplicationDefinition>
     <Compile Include="Data\PlanningGameManager.cs" />
     <Compile Include="Iteration\IterationViewModel.cs" />
+    <Compile Include="Iteration\SelectIterationWindow.xaml.cs">
+      <DependentUpon>SelectIterationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main\CanvasZoomViewModel.cs" />
     <Compile Include="Main\MainWindowViewModel.cs" />
+    <Compile Include="Main\SelectIterationViewModel.cs" />
     <Compile Include="PlanningSheets\Control\MouseDragHelper.cs" />
     <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
     <Compile Include="PlanningSheets\Control\PlanningSheetControl.xaml.cs">
@@ -67,11 +71,19 @@
     <Compile Include="Projects\ProjectViewModel.cs" />
     <Compile Include="Storycards\IStorcardViewModel.cs" />
     <Compile Include="Storycards\PlacedStorycardViewModel.cs" />
+    <Compile Include="Storycards\StorycardBatchLoader.cs" />
+    <Compile Include="Storycards\StorycardBatchLoadWindow.xaml.cs">
+      <DependentUpon>StorycardBatchLoadWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Storycards\StorycardViewModel.cs" />
     <Compile Include="Storycards\Control\StorycardControl.xaml.cs">
       <DependentUpon>StorycardControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Page Include="Iteration\SelectIterationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Storycards\Control\StorycardControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Storycards\StorycardBatchLoadWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Notecard.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,18 +20,18 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="75"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Row="0" 
-                  Grid.Column="0"
-                  ItemsSource="{Binding SelectedProject.Iterations}"
-                  SelectedItem="{Binding SelectedIteration}">
-
-        </ListView>
+        <StackPanel>
+            <TextBlock Margin="5">Iteration</TextBlock>
+            <Button Margin="5" Click="SelectIteration_OnClick" Content="{Binding SelectedIteration.IterationNumber}"/>
+            <Button Margin="5" Click="AddCards_OnClick">Add Cards</Button>
+        </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                       VerticalScrollBarVisibility="Disabled" 
                       Grid.Column="1"
+                      Grid.Row="0"
                       x:Name="CanvasContainer">
             <Canvas x:Name="GameCanvas" PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
                 <Canvas.RenderTransform>

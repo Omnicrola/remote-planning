@@ -46,6 +46,7 @@ namespace RemotePlanning.Data
 
             _mainWindow.ViewModel.Projects.Add(projectViewModel);
             _mainWindow.ViewModel.SelectedProject = projectViewModel;
+            _mainWindow.ViewModel.SelectedIteration = iterationViewModel;
         }
     }
 }

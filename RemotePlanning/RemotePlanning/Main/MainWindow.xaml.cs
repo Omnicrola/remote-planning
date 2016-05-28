@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using RemotePlanning.Iteration;
 using RemotePlanning.Main;
 using RemotePlanning.PlanningSheets;
 using RemotePlanning.PlanningSheets.Control;
+using RemotePlanning.Storycards;
 
 namespace RemotePlanning
 {
@@ -39,6 +41,22 @@ namespace RemotePlanning
         {
             ViewModel.ZoomViewModel.AdjustScale(CanvasContainer, mouseArgs);
             mouseArgs.Handled = true;
+        }
+
+        private void AddCards_OnClick(object sender, RoutedEventArgs e)
+        {
+            var storycardBatchLoadWindow = new StorycardBatchLoadWindow() { Owner = this };
+            storycardBatchLoadWindow.ShowDialog();
+        }
+
+        private void SelectIteration_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectIterationWindow = new SelectIterationWindow()
+            {
+                Owner = this
+            };
+            selectIterationWindow.ShowDialog();
+
         }
     }
 }
