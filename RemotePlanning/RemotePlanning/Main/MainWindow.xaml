@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemotePlanning"
         xmlns:main="clr-namespace:RemotePlanning.Main"
-        xmlns:planningSheet="clr-namespace:RemotePlanning.PlanningSheets.UserControl"
         xmlns:planningSheets="clr-namespace:RemotePlanning.PlanningSheets"
+        xmlns:control="clr-namespace:RemotePlanning.PlanningSheets.Control"
         mc:Ignorable="d"
         Title="Remote Planning" 
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
-        WindowState="Maximized"
-        Height="400" 
-        Width="800">
+        
+        Height="1024" 
+        Width="768">
     <Grid x:Name="WindowPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -33,20 +33,13 @@
                       VerticalScrollBarVisibility="Disabled" 
                       Grid.Column="1"
                       x:Name="CanvasContainer">
-            <Canvas PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
+            <Canvas x:Name="GameCanvas" PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="{Binding ScaleX}" ScaleY="{Binding ScaleY}"/>
                         <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}"/>
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <ItemsControl ItemsSource="{Binding SelectedIteration.PlanningSheets}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate >
-                            <planningSheet:PlanningSheetControl ></planningSheet:PlanningSheetControl>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
             </Canvas>
         </ScrollViewer>
         <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -54,4 +47,6 @@
         </StatusBar>
     </Grid>
 </Window>
+
+
 

@@ -21,7 +21,7 @@ namespace RemotePlanning.PlanningSheets
 
         public PlanningSheetViewModel()
         {
-            Color = Brushes.White;
+            Color = Brushes.Green;
             PlannedCards = new ObservableCollection<PlacedStorycardViewModel>();
             //            PlannedCards.CollectionChanged += SortPlannedCards;
             //            _isNotCurrentlySorting = true;

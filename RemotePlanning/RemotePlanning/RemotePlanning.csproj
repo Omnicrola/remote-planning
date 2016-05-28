@@ -59,6 +59,7 @@
     <Compile Include="Iteration\IterationViewModel.cs" />
     <Compile Include="Main\CanvasZoomViewModel.cs" />
     <Compile Include="Main\MainWindowViewModel.cs" />
+    <Compile Include="PlanningSheets\Control\MouseDragHelper.cs" />
     <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
     <Compile Include="PlanningSheets\Control\PlanningSheetControl.xaml.cs">
       <DependentUpon>PlanningSheetControl.xaml</DependentUpon>
