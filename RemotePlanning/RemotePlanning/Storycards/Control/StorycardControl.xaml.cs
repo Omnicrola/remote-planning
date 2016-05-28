@@ -5,14 +5,14 @@ using System.Windows.Controls.Primitives;
 namespace RemotePlanning.Storycards.Control
 {
     /// <summary>
-    /// Interaction logic for Storycard.xaml
+    /// Interaction logic for StorycardControl.xaml
     /// </summary>
-    public partial class Storycard : UserControl
+    public partial class StorycardControl : UserControl
     {
 
         public event EventHandler<StorycardMovedEventArgs> StorycardMoved;
 
-        public Storycard()
+        public StorycardControl()
         {
             InitializeComponent();
         }

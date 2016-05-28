@@ -71,7 +71,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <TextBlock Grid.Row="3" Style="{StaticResource StorycardFont}">EST - Storycard Estimation (2 hours)</TextBlock>
+                    <TextBlock Grid.Row="3" Style="{StaticResource StorycardFont}">EST - StorycardControl Estimation (2 hours)</TextBlock>
                     <TextBlock Grid.Row="4" Style="{StaticResource StorycardFont}">SHO - Client Show &amp; Tell (2 hours)</TextBlock>
                 </Grid>
             </Border>

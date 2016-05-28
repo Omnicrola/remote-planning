@@ -6,8 +6,18 @@
         xmlns:local="clr-namespace:RemotePlanning.Storycards"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="Load Storycards" Height="300" Width="300">
+        Title="Load StorycardControls" Height="300" Width="300">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="StorycardText"  Grid.ColumnSpan="2" Margin="10" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"></TextBox>
+        <Button Click="Cancel_OnClick" Margin="10,10,40,10" Grid.Row="1">Cancel</Button>
+        <Button Click="Load_OnClick" Margin="40,10,10,10" Grid.Row="1" Grid.Column="1">Load</Button>
     </Grid>
 </Window>

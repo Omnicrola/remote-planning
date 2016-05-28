@@ -10,6 +10,7 @@ using RemotePlanning.Main;
 using RemotePlanning.PlanningSheets;
 using RemotePlanning.PlanningSheets.Control;
 using RemotePlanning.Storycards;
+using RemotePlanning.Storycards.Control;
 
 namespace RemotePlanning
 {
@@ -34,9 +35,14 @@ namespace RemotePlanning
         {
             if (e.PropertyName.Equals("SelectedIteration"))
             {
-                if (_previouslySelectedIteration != null) { _previouslySelectedIteration.PlanningSheets.CollectionChanged -= PlanningSheets_OnChange; }
+                if (_previouslySelectedIteration != null)
+                {
+                    _previouslySelectedIteration.PlanningSheets.CollectionChanged -= PlanningSheets_OnChange;
+                    _previouslySelectedIteration.Storycards.CollectionChanged -= Storycards_OnChange;
+                }
                 ClearPlanningSheets();
                 ViewModel.SelectedIteration.PlanningSheets.CollectionChanged += PlanningSheets_OnChange;
+                ViewModel.SelectedIteration.Storycards.CollectionChanged += Storycards_OnChange;
                 foreach (PlanningSheetViewModel planningSheetViewModel in ViewModel.SelectedIteration.PlanningSheets)
                 {
                     AddPlanningSheet(planningSheetViewModel);
@@ -79,8 +85,19 @@ namespace RemotePlanning
 
         private void PlanningSheets_OnChange(object sender, NotifyCollectionChangedEventArgs e)
         {
-
             e.NewItems.Cast<PlanningSheetViewModel>().ToList().ForEach(AddPlanningSheet);
+        }
+        private void Storycards_OnChange(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            e.NewItems.Cast<PlacedStorycardViewModel>().ToList().ForEach(AddStoryCard);
+        }
+
+        private void AddStoryCard(PlacedStorycardViewModel storycardViewModel)
+        {
+            var storycardControl = new StorycardControl() { DataContext = storycardViewModel };
+            Canvas.SetTop(storycardControl, new Random().Next(10, 500));
+            Canvas.SetLeft(storycardControl, new Random().Next(10, 500));
+            GameCanvas.Children.Add(storycardControl);
         }
 
         private void AddPlanningSheet(PlanningSheetViewModel planningSheetViewModel)
@@ -101,7 +118,17 @@ namespace RemotePlanning
         private void AddCards_OnClick(object sender, RoutedEventArgs e)
         {
             var storycardBatchLoadWindow = new StorycardBatchLoadWindow() { Owner = this };
+            storycardBatchLoadWindow.StorycardCreated += AddNewStorycards;
             storycardBatchLoadWindow.ShowDialog();
+        }
+
+        private void AddNewStorycards(object sender, StorycardCreatedEventArgs e)
+        {
+            e.Storycards.ForEach(card =>
+            {
+                ViewModel.SelectedIteration.Storycards.Add(new PlacedStorycardViewModel(card));
+            });
+
         }
 
         private void SelectIteration_OnClick(object sender, RoutedEventArgs e)
