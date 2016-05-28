@@ -35,7 +35,7 @@ namespace RemotePlanning
             if (e.PropertyName.Equals("SelectedIteration"))
             {
                 if (_previouslySelectedIteration != null) { _previouslySelectedIteration.PlanningSheets.CollectionChanged -= PlanningSheets_OnChange; }
-                GameCanvas.Children.Clear();
+                ClearPlanningSheets();
                 ViewModel.SelectedIteration.PlanningSheets.CollectionChanged += PlanningSheets_OnChange;
                 foreach (PlanningSheetViewModel planningSheetViewModel in ViewModel.SelectedIteration.PlanningSheets)
                 {
@@ -43,6 +43,38 @@ namespace RemotePlanning
                 }
                 _previouslySelectedIteration = ViewModel.SelectedIteration;
             }
+        }
+
+        private void ClearPlanningSheets()
+        {
+            GameCanvas.Children
+                .Cast<UIElement>()
+                .OfType<PlanningSheetControl>()
+                .ToList()
+                .ForEach(c => c.PlanningSheetMoved -= ReorderSheets);
+            GameCanvas.Children.Clear();
+        }
+
+        private void ReorderSheets(object sender, PlanningSheetMovedArgs e)
+        {
+            var lasControlToMove = e.PlanningSheetControl;
+            int zIndex = 1;
+            GameCanvas.Children
+                .Cast<UIElement>()
+                .OfType<PlanningSheetControl>()
+                .OrderBy(Canvas.GetZIndex)
+                .ToList()
+                .ForEach(c =>
+                {
+                    if (c == lasControlToMove)
+                    {
+                        Canvas.SetZIndex(c, 999);
+                    }
+                    else
+                    {
+                        Canvas.SetZIndex(c, zIndex++);
+                    }
+                });
         }
 
         private void PlanningSheets_OnChange(object sender, NotifyCollectionChangedEventArgs e)
@@ -54,6 +86,7 @@ namespace RemotePlanning
         private void AddPlanningSheet(PlanningSheetViewModel planningSheetViewModel)
         {
             var planningSheetControl = new PlanningSheetControl() { DataContext = planningSheetViewModel };
+            planningSheetControl.PlanningSheetMoved += ReorderSheets;
             Canvas.SetTop(planningSheetControl, new Random().Next(10, 500));
             Canvas.SetLeft(planningSheetControl, new Random().Next(10, 500));
             GameCanvas.Children.Add(planningSheetControl);

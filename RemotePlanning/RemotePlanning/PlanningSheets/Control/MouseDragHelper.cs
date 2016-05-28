@@ -22,6 +22,8 @@ namespace RemotePlanning.PlanningSheets.Control
         public void MouseDown(MouseButtonEventArgs mouseButtonEventArgs)
         {
             _isMouseDown = true;
+
+            Canvas.SetZIndex(_parentControl, 999);
             _startPosition = mouseButtonEventArgs.GetPosition(_parentControl);
         }
 

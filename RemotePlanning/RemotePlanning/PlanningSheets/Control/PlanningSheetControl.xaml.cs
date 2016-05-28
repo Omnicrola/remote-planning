@@ -24,7 +24,7 @@ namespace RemotePlanning.PlanningSheets.Control
 
         private void Raise_StorycardMoved(object sender, DragDeltaEventArgs deltaArgs)
         {
-            PlanningSheetMoved?.Invoke(this, new PlanningSheetMovedArgs());
+            PlanningSheetMoved?.Invoke(this, new PlanningSheetMovedArgs(this, deltaArgs.HorizontalChange, deltaArgs.VerticalChange));
         }
 
         private void Self_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -45,5 +45,15 @@ namespace RemotePlanning.PlanningSheets.Control
 
     public class PlanningSheetMovedArgs : EventArgs
     {
+        public PlanningSheetControl PlanningSheetControl { get; private set; }
+        public double HorizontalChange { get; private set; }
+        public double VerticalChange { get; private set; }
+
+        public PlanningSheetMovedArgs(PlanningSheetControl planningSheetControl, double horizontalChange, double verticalChange)
+        {
+            PlanningSheetControl = planningSheetControl;
+            HorizontalChange = horizontalChange;
+            VerticalChange = verticalChange;
+        }
     }
 }
