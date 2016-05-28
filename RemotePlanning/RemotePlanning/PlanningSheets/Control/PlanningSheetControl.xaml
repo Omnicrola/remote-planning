@@ -14,7 +14,8 @@
     <UserControl.Resources>
         <Style x:Key="StorycardFont" TargetType="TextBlock">
             <Setter Property="FontSize" Value="18"></Setter>
-            <Setter Property="Margin" Value="0"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
         </Style>
         <Style x:Key="HeaderFont" TargetType="TextBlock">
             <Setter Property="FontSize" Value="18"></Setter>
@@ -33,11 +34,17 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" Style="{StaticResource HeaderFont}">Project Bell</TextBlock>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource HeaderFont}" >End Date</TextBlock>
+                    <TextBlock Style="{StaticResource HeaderFont}" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.SelectedIteration.EndDate, StringFormat=MM-dd-yyy}"/>
+                </StackPanel>
                 <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource HeaderFont}">Planning Sheet</TextBlock>
                 <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" >
-                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}">Week Ending</TextBlock>
-                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}">05/05/2014</TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.SelectedProject.Name}"/>
+                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}">
+                        <Run>Iteration #</Run>
+                        <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.SelectedIteration.IterationNumber}"/>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
             <Border Grid.Row="1" Margin="10" BorderThickness="2" BorderBrush="Black">
@@ -52,9 +59,14 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Style="{StaticResource StorycardFont}">STU - Daily Standup  (1 hour)</TextBlock>
                     <TextBlock Grid.Row="1" Style="{StaticResource StorycardFont}">KIK - Iteration Kickoff (2 hours)</TextBlock>
-                    <TextBlock Grid.Row="2" HorizontalAlignment="Center"  FontSize="24" VerticalAlignment="Center">Place Storycards here</TextBlock>
-                    <StackPanel Grid.Row="2">
-                    </StackPanel>
+                    <!--                    <TextBlock Grid.Row="2" HorizontalAlignment="Center"  FontSize="24" VerticalAlignment="Center">Place Storycards here</TextBlock>-->
+                    <ItemsControl Grid.Row="2" ItemsSource="{Binding PlannedCards}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>Hello</TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                     <TextBlock Grid.Row="3" Style="{StaticResource StorycardFont}">EST - Storycard Estimation (2 hours)</TextBlock>
                     <TextBlock Grid.Row="4" Style="{StaticResource StorycardFont}">SHO - Client Show &amp; Tell (2 hours)</TextBlock>
                 </Grid>
@@ -62,3 +74,4 @@
         </Grid>
     </Border>
 </UserControl>
+

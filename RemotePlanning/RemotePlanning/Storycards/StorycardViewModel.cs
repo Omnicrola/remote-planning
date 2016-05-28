@@ -3,7 +3,7 @@ using RemotePlanning.ViewModels;
 
 namespace RemotePlanning.Storycards
 {
-    public class StorycardViewModel : ViewModel
+    public class StorycardViewModel : ViewModel, IStorcardViewModel
     {
         private string _role;
         private string _title;

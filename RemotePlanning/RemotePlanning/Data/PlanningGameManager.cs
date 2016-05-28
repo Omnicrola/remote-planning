@@ -28,18 +28,21 @@ namespace RemotePlanning.Data
                 EndDate = new DateTime(2016, 7, 7),
                 IterationNumber = 5,
             };
-            iterationViewModel.PlanningSheets.Add(new PlanningSheetViewModel
+            var planningSheetViewModel = new PlanningSheetViewModel
             {
                 Role = "DEV",
-            });
+            };
+            iterationViewModel.PlanningSheets.Add(planningSheetViewModel);
             projectViewModel.Iterations.Add(iterationViewModel);
-            projectViewModel.Storycards.Add(new StorycardViewModel
+            var storycard1 = new StorycardViewModel
             {
                 Role = "DEV",
                 Content = "I am some content",
                 Estimate = 16,
                 Title = "Create a remote planning game"
-            });
+            };
+            projectViewModel.Storycards.Add(storycard1);
+            planningSheetViewModel.PlannedCards.Add(new PlacedStorycardViewModel(storycard1));
 
             _mainWindow.ViewModel.Projects.Add(projectViewModel);
             _mainWindow.ViewModel.SelectedProject = projectViewModel;

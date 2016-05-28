@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using RemotePlanning.ViewModels;
+
+namespace RemotePlanning.Storycards
+{
+    public class PlacedStorycardViewModel : ViewModel, IStorcardViewModel
+    {
+        private StorycardViewModel wrappedStorycard;
+
+        public PlacedStorycardViewModel(StorycardViewModel wrappedStorycard)
+        {
+            this.wrappedStorycard = wrappedStorycard;
+            wrappedStorycard.PropertyChanged += PropertyChangePassThrough;
+        }
+
+        private void PropertyChangePassThrough(object sender, PropertyChangedEventArgs e)
+        {
+            FireOnPropertyChanged(e.PropertyName);
+        }
+
+        public int Order { get; set; }
+
+        public string Role { get { return wrappedStorycard.Role; } set { } }
+        public string Title { get { return wrappedStorycard.Title; } set { } }
+        public string Content { get { return wrappedStorycard.Content; } set { } }
+        public int Estimate { get { return wrappedStorycard.Estimate; } set { } }
+    }
+
+}

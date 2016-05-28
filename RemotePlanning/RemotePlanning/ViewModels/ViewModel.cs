@@ -30,5 +30,6 @@ namespace RemotePlanning.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }

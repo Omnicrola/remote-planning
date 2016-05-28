@@ -64,6 +64,8 @@
       <DependentUpon>PlanningSheetControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Projects\ProjectViewModel.cs" />
+    <Compile Include="Storycards\IStorcardViewModel.cs" />
+    <Compile Include="Storycards\PlacedStorycardViewModel.cs" />
     <Compile Include="Storycards\StorycardViewModel.cs" />
     <Compile Include="Storycards\Control\StorycardControl.xaml.cs">
       <DependentUpon>StorycardControl.xaml</DependentUpon>

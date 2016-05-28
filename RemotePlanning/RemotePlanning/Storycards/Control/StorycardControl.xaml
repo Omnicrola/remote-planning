@@ -31,7 +31,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock FontSize="18">Project</TextBlock>
+                        <TextBlock FontSize="18">ProjectName</TextBlock>
                         <TextBlock FontSize="18">Role</TextBlock>
                     </StackPanel>
                     <TextBlock Grid.Row="0" Grid.Column="1" FontSize="24" VerticalAlignment="Center" TextWrapping="Wrap">Title</TextBlock>
