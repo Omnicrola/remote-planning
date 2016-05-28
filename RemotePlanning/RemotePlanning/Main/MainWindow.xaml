@@ -11,9 +11,8 @@
         Title="Remote Planning" 
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
-        
-        Height="1024" 
-        Width="768">
+        Width="1024"
+        Height="768">
     <Grid x:Name="WindowPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -27,6 +26,7 @@
             <TextBlock Margin="5">Iteration</TextBlock>
             <Button Margin="5" Click="SelectIteration_OnClick" Content="{Binding SelectedIteration.IterationNumber}"/>
             <Button Margin="5" Click="AddCards_OnClick">Add Cards</Button>
+            <Button Margin="5" Click="AddSheet_OnClick" >Add Sheet</Button>
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                       VerticalScrollBarVisibility="Disabled" 
