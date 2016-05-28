@@ -1,0 +1,36 @@
+﻿<Window x:Class="RemotePlanning.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RemotePlanning"
+        xmlns:userControl="clr-namespace:RemotePlanning.Storycards.UserControl"
+        xmlns:main="clr-namespace:RemotePlanning.Main"
+        mc:Ignorable="d"
+        Title="Remote Planning" 
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
+        WindowState="Maximized"
+        Height="350" 
+        Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Row="0" Grid.Column="0"></ListView>
+        <ScrollViewer Grid.Row="0" Grid.Column="1">
+            <Canvas MouseWheel="Canvas_OnMouseWheel" Background="White">
+                <Canvas.RenderTransform>
+                    <ScaleTransform ScaleX="{Binding ScaleX}" ScaleY="{Binding ScaleY}"/>
+                </Canvas.RenderTransform>
+                <userControl:Storycard></userControl:Storycard>
+            </Canvas>
+        </ScrollViewer>
+        <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></StatusBar>
+    </Grid>
+</Window>

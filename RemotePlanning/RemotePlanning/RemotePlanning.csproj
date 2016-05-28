@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Iteration\IterationViewModel.cs" />
+    <Compile Include="Main\MainWindowViewModel.cs" />
     <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
     <Compile Include="Projects\ProjectViewModel.cs" />
     <Compile Include="Storycards\StorycardViewModel.cs" />
@@ -63,7 +64,7 @@
       <DependentUpon>Storycard.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ViewModel.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -71,7 +72,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
