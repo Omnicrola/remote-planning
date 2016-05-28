@@ -4,15 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:storycards="clr-namespace:RemotePlanning.Storycards"
+             xmlns:control="clr-namespace:RemotePlanning.Storycards.Control"
              mc:Ignorable="d" 
              Canvas.Left="1"
              Canvas.Top="1"
              Canvas.ZIndex="99"
-             MaxWidth="500"
-             MaxHeight="500"
+             Width="400"
+             Height="250"
              BorderBrush="Black"
              BorderThickness="2"
+             d:DataContext="{d:DesignInstance storycards:PlacedStorycardViewModel}"
              d:DesignWidth="500" d:DesignHeight="200">
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="Height" Value="100"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Estimate}" Value="2">
+                    <Setter Property="Height" Value="32"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Estimate}" Value="4">
+                    <Setter Property="Height" Value="62.5"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Estimate}" Value="8">
+                    <Setter Property="Height" Value="125"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Estimate}" Value="16">
+                    <Setter Property="Height" Value="250"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Estimate}" Value="32">
+                    <Setter Property="Height" Value="500"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
     <UserControl.Resources>
         <BitmapImage x:Key="NotecardImage" UriSource="../../Resources/Images/Notecard.jpg"/>
     </UserControl.Resources>
@@ -22,7 +46,7 @@
     <Thumb DragDelta="Thumb_OnDragDelta" >
         <Thumb.Template>
             <ControlTemplate>
-                <Grid>
+                <Grid Margin="10" Name="CardGrid" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="4*"/>
@@ -33,16 +57,17 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock FontSize="14">ProjectName</TextBlock>
-                        <TextBlock FontSize="14">Role</TextBlock>
+                        <TextBlock FontSize="14" Text="{Binding RelativeSource={RelativeSource AncestorType=Canvas}, Path=DataContext.SelectedProject.Name}"/>
+                        <TextBlock FontSize="14" Text="{Binding Role}"/>
                     </StackPanel>
-                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap">Title</TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="28" HorizontalAlignment="Center">32</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Title}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="28" HorizontalAlignment="Center" Text="{Binding Estimate}"/>
                     <TextBlock Grid.Row="1" 
                                Grid.Column="0" 
                                Margin="25,10,25,10"
                                TextWrapping="Wrap"
-                               Grid.ColumnSpan="3">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</TextBlock>
+                               Grid.ColumnSpan="3"
+                               Text="{Binding Content}"/>
                 </Grid>
             </ControlTemplate>
         </Thumb.Template>
