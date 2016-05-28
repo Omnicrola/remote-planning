@@ -41,14 +41,14 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Style="{StaticResource HeaderFont}" >End Date</TextBlock>
-                    <TextBlock Style="{StaticResource HeaderFont}" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.SelectedIteration.EndDate, StringFormat=MM-dd-yyy}"/>
+                    <TextBlock Style="{StaticResource HeaderFont}" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}, Path=DataContext.SelectedIteration.EndDate, StringFormat=MM-dd-yyy}"/>
                 </StackPanel>
                 <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource HeaderFont}">Planning Sheet</TextBlock>
                 <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" >
-                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.SelectedProject.Name}"/>
+                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}, Path=DataContext.SelectedProject.Name}"/>
                     <TextBlock HorizontalAlignment="Center" Style="{StaticResource HeaderFont}">
                         <Run>Iteration #</Run>
-                        <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.SelectedIteration.IterationNumber}"/>
+                        <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}, Path=DataContext.SelectedIteration.IterationNumber}"/>
                     </TextBlock>
                 </StackPanel>
             </Grid>
