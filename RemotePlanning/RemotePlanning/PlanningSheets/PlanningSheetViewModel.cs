@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Windows.Media;
 using RemotePlanning.ViewModels;
 
 namespace RemotePlanning.PlanningSheets
 {
     public class PlanningSheetViewModel : ViewModel
     {
-        private DateTime _weekEnding;
         private string _role;
+        private SolidColorBrush _color;
 
-        public DateTime WeekEnding
+
+        public PlanningSheetViewModel()
         {
-            get { return _weekEnding; }
-            set { SetPropertyField(ref _weekEnding, value); }
+            Color = Brushes.White;
         }
-
         public string Role
         {
             get { return _role; }
             set { SetPropertyField(ref _role, value); }
         }
 
+        public SolidColorBrush Color
+        {
+            get { return _color; }
+            set { SetPropertyField(ref _color, value); }
+        }
     }
 }

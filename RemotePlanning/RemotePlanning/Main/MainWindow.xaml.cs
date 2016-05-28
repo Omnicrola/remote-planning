@@ -9,18 +9,18 @@ namespace RemotePlanning
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowViewModel _mainWindowViewModel;
+        public MainWindowViewModel ViewModel { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = _mainWindowViewModel = new MainWindowViewModel();
+            DataContext = ViewModel = new MainWindowViewModel(new CanvasZoomViewModel());
         }
 
         private void Canvas_OnMouseWheel(object sender, MouseWheelEventArgs mouseArgs)
         {
 
-            _mainWindowViewModel.AdjustScale(CanvasContainer, mouseArgs);
+            ViewModel.ZoomViewModel.AdjustScale(CanvasContainer, mouseArgs);
             mouseArgs.Handled = true;
         }
     }

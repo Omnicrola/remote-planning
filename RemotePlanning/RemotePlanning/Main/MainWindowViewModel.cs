@@ -1,77 +1,34 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using RemotePlanning.Iteration;
+using RemotePlanning.Main;
+using RemotePlanning.Projects;
 using RemotePlanning.ViewModels;
 
-namespace RemotePlanning.Main
+namespace RemotePlanning
 {
     public class MainWindowViewModel : ViewModel
     {
-        private const double SCALE_RATE = 1.1;
+        private ProjectViewModel _selectedProject;
+        private IterationViewModel _selectedIteration;
+        public CanvasZoomViewModel ZoomViewModel { get; }
+        public ObservableCollection<ProjectViewModel> Projects { get; private set; }
 
-        private double _scaleX;
-        private double _scaleY;
-        private double _offsetX;
-        private double _offsetY;
-
-        public MainWindowViewModel()
+        public ProjectViewModel SelectedProject
         {
-            ScaleX = 1;
-            ScaleY = 1;
+            get { return _selectedProject; }
+            set { SetPropertyField(ref _selectedProject, value); }
         }
 
-        public double ScaleX
+        public IterationViewModel SelectedIteration
         {
-            get { return _scaleX; }
-            set { SetPropertyField(ref _scaleX, value); }
+            get { return _selectedIteration; }
+            set { SetPropertyField(ref _selectedIteration, value); }
         }
 
-        public double ScaleY
+        public MainWindowViewModel(CanvasZoomViewModel canvasZoomViewModel)
         {
-            get { return _scaleY; }
-            set { SetPropertyField(ref _scaleY, value); }
-        }
-
-        public double OffsetX
-        {
-            get { return _offsetX; }
-            set { SetPropertyField(ref _offsetX, value); }
-        }
-
-        public double OffsetY
-        {
-            get { return _offsetY; }
-            set { SetPropertyField(ref _offsetY, value); }
-        }
-
-
-        public void AdjustScale(ScrollViewer zoomContainer, MouseWheelEventArgs mouseArgs)
-        {
-            var mousePosition = mouseArgs.GetPosition(zoomContainer);
-            double horizontalPercent = mousePosition.X / zoomContainer.ViewportWidth;
-            double verticalPercentage = mousePosition.Y / zoomContainer.ViewportHeight;
-
-            var deltaX = (zoomContainer.ViewportWidth * SCALE_RATE) - zoomContainer.ViewportWidth;
-            var deltaY = (zoomContainer.ViewportHeight * SCALE_RATE) - zoomContainer.ViewportHeight;
-
-            var offsetIncrmentX = deltaX * horizontalPercent;
-            var offsetIncrmentY = deltaY * verticalPercentage;
-            if (mouseArgs.Delta > 0)
-            {
-                ScaleX *= SCALE_RATE;
-                ScaleY *= SCALE_RATE;
-                OffsetX -= offsetIncrmentX;
-                OffsetY -= offsetIncrmentY;
-
-            }
-            else
-            {
-                ScaleX /= SCALE_RATE;
-                ScaleY /= SCALE_RATE;
-                OffsetX += offsetIncrmentX;
-                OffsetY += offsetIncrmentY;
-            }
+            this.ZoomViewModel = canvasZoomViewModel;
+            Projects = new ObservableCollection<ProjectViewModel>();
         }
     }
 }

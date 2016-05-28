@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemotePlanning"
-        xmlns:userControl="clr-namespace:RemotePlanning.Storycards.UserControl"
         xmlns:main="clr-namespace:RemotePlanning.Main"
+        xmlns:planningSheet="clr-namespace:RemotePlanning.PlanningSheets.UserControl"
+        xmlns:planningSheets="clr-namespace:RemotePlanning.PlanningSheets"
         mc:Ignorable="d"
         Title="Remote Planning" 
         WindowStartupLocation="CenterScreen"
-        d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
         WindowState="Maximized"
-        Height="350" 
-        Width="525">
+        Height="400" 
+        Width="800">
     <Grid x:Name="WindowPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -22,7 +23,12 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Row="0" Grid.Column="0"></ListView>
+        <ListView Grid.Row="0" 
+                  Grid.Column="0"
+                  ItemsSource="{Binding SelectedProject.Iterations}"
+                  SelectedItem="{Binding SelectedIteration}">
+
+        </ListView>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                       VerticalScrollBarVisibility="Disabled" 
                       Grid.Column="1"
@@ -34,9 +40,18 @@
                         <TranslateTransform X="{Binding OffsetX}" Y="{Binding OffsetY}"/>
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <userControl:Storycard></userControl:Storycard>
+                <ItemsControl ItemsSource="{Binding SelectedIteration.PlanningSheets}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate >
+                            <planningSheet:PlanningSheetControl ></planningSheet:PlanningSheetControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Canvas>
         </ScrollViewer>
-        <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"></StatusBar>
+        <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBlock>Ready</TextBlock>
+        </StatusBar>
     </Grid>
 </Window>
+

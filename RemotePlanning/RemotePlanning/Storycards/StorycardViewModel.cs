@@ -5,17 +5,10 @@ namespace RemotePlanning.Storycards
 {
     public class StorycardViewModel : ViewModel
     {
-        private string _project;
         private string _role;
         private string _title;
         private string _content;
         private int _estimate;
-
-        public string Project
-        {
-            get { return _project; }
-            set { SetPropertyField(ref _project, value); }
-        }
 
         public string Role
         {

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using RemotePlanning.Data;
 
 namespace RemotePlanning
 {
@@ -17,6 +18,7 @@ namespace RemotePlanning
         private void Application_Start(object sender, StartupEventArgs args)
         {
             var mainWindow = new MainWindow();
+            var planningGameManager = new PlanningGameManager(mainWindow);
             mainWindow.Show();
         }
     }

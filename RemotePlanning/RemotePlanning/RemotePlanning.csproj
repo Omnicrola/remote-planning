@@ -55,13 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\PlanningGameManager.cs" />
     <Compile Include="Iteration\IterationViewModel.cs" />
+    <Compile Include="Main\CanvasZoomViewModel.cs" />
     <Compile Include="Main\MainWindowViewModel.cs" />
     <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
+    <Compile Include="PlanningSheets\Control\PlanningSheetControl.xaml.cs">
+      <DependentUpon>PlanningSheetControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Projects\ProjectViewModel.cs" />
     <Compile Include="Storycards\StorycardViewModel.cs" />
-    <Compile Include="Storycards\UserControl\Storycard.xaml.cs">
-      <DependentUpon>Storycard.xaml</DependentUpon>
+    <Compile Include="Storycards\Control\StorycardControl.xaml.cs">
+      <DependentUpon>StorycardControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Main\MainWindow.xaml">
@@ -76,7 +81,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Storycards\UserControl\Storycard.xaml">
+    <Page Include="PlanningSheets\Control\PlanningSheetControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Storycards\Control\StorycardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
