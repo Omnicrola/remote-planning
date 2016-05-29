@@ -139,6 +139,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Notecard.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetworkModel\NetworkModel.csproj">
+      <Project>{00F94B22-4BC2-4022-8651-957B94C4B4DE}</Project>
+      <Name>NetworkModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

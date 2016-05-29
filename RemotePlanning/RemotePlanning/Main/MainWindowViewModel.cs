@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using RemotePlanning.Iteration;
-using RemotePlanning.Main;
 using RemotePlanning.Projects;
 using RemotePlanning.ViewModels;
 
-namespace RemotePlanning
+namespace RemotePlanning.Main
 {
     public class MainWindowViewModel : ViewModel
     {

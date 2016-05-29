@@ -7,13 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using RemotePlanning.Iteration;
-using RemotePlanning.Main;
 using RemotePlanning.PlanningSheets;
 using RemotePlanning.PlanningSheets.Control;
 using RemotePlanning.Storycards;
 using RemotePlanning.Storycards.Control;
 
-namespace RemotePlanning
+namespace RemotePlanning.Main
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -9,9 +9,9 @@ namespace RemotePlanning.Data
 {
     internal class PlanningGameManager
     {
-        private readonly MainWindow _mainWindow;
+        private readonly Main.MainWindow _mainWindow;
 
-        public PlanningGameManager(MainWindow mainWindow)
+        public PlanningGameManager(Main.MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
             mainWindow.Loaded += Window_OnLoaded;
