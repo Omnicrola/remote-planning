@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Threading;
 
 namespace NetworkModel.Networking
@@ -26,7 +23,6 @@ namespace NetworkModel.Networking
 
         public void Start()
         {
-
             IPAddress ipAddress = IPAddress.Parse(_ipString);
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, NetworkConstants.SERVER_PORT);
 

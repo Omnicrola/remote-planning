@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using RemotePlanning.ViewModels;
+﻿using RemotePlanning.ViewModels;
 
 namespace RemotePlanning.Storycards
 {
