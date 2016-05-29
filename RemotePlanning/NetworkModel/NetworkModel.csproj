@@ -44,12 +44,16 @@
     <Compile Include="BusinessObjects\PlanningSheet.cs" />
     <Compile Include="BusinessObjects\Project.cs" />
     <Compile Include="BusinessObjects\Storycard.cs" />
-    <Compile Include="Networking\NetworkConstants.cs" />
     <Compile Include="Networking\NetworkClient.cs" />
+    <Compile Include="Networking\NetworkConstants.cs" />
+    <Compile Include="Networking\NetworkClientConnection.cs" />
     <Compile Include="Networking\NetworkingException.cs" />
-    <Compile Include="Networking\NetworkMessageBuilder.cs" />
+    <Compile Include="Networking\NetworkMessage.cs" />
+    <Compile Include="Networking\NetworkMessageReceivedEventArgs.cs" />
+    <Compile Include="Networking\NetworkMessageReceiver.cs" />
     <Compile Include="Networking\NetworkMessageWriter.cs" />
-    <Compile Include="Networking\NetworkServer.cs" />
+    <Compile Include="Networking\NetworkSerializationException.cs" />
+    <Compile Include="Networking\NetworkServerConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

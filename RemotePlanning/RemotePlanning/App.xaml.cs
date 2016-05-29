@@ -21,11 +21,11 @@ namespace RemotePlanning
         private void Application_Start(object sender, StartupEventArgs args)
         {
             var ipString = "127.0.0.1";
-            var networkServer = new NetworkServer(ipString);
+            var networkServer = new NetworkServerConnection(ipString);
             new Thread(() => networkServer.Start()).Start();
 
 
-            var networkClient = new NetworkClient(ipString);
+            var networkClient = new NetworkClientConnection(ipString);
             new Thread(() =>
             {
                 Console.WriteLine("Client connecting...");

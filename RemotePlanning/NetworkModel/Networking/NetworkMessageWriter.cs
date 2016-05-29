@@ -13,9 +13,12 @@ namespace NetworkModel.Networking
             _socket = socket;
         }
 
-        public void SendMessage(string data)
+        public void SendMessage(NetworkMessage message)
         {
-            data += NetworkConstants.MESSAGE_TERMINATOR;
+
+            string data = message.Serialize() +
+                NetworkConstants.MESSAGE_TERMINATOR;
+
             byte[] byteData = Encoding.ASCII.GetBytes(data);
             _socket.BeginSend(byteData, 0, byteData.Length, 0, SendCompleteCallback, _socket);
         }

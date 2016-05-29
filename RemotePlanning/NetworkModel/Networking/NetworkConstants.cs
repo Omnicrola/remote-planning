@@ -4,6 +4,6 @@
     {
         public static int SERVER_PORT = 25000;
         public static string MESSAGE_TERMINATOR = "<<EOF>>";
-
+        public static string PARAM_DELIMITER = "<<F>>";
     }
 }

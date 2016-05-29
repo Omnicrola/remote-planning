@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Remoting.Messaging;
@@ -8,17 +9,19 @@ using System.Threading;
 
 namespace NetworkModel.Networking
 {
-    public class NetworkServer
+    public class NetworkServerConnection
     {
-        public static ManualResetEvent _serverAcceptManualEvent = new ManualResetEvent(false);
-        private bool _isRunning;
-        private List<NetworkMessageWriter> _clients;
-        private string _ipString;
+        private static int NEXT_CLIENT_ID = 1;
 
-        public NetworkServer(string ipString)
+        private static readonly ManualResetEvent _serverAcceptManualEvent = new ManualResetEvent(false);
+        private bool _isRunning;
+        private readonly List<NetworkClient> _clients;
+        private readonly string _ipString;
+
+        public NetworkServerConnection(string ipString)
         {
             _ipString = ipString;
-            _clients = new List<NetworkMessageWriter>();
+            _clients = new List<NetworkClient>();
         }
 
         public void Start()
@@ -26,7 +29,6 @@ namespace NetworkModel.Networking
 
             IPAddress ipAddress = IPAddress.Parse(_ipString);
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, NetworkConstants.SERVER_PORT);
-
 
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
@@ -48,6 +50,7 @@ namespace NetworkModel.Networking
             }
         }
 
+
         public void StopServer()
         {
             _isRunning = false;
@@ -62,20 +65,31 @@ namespace NetworkModel.Networking
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
 
-            NetworkMessageBuilder networkMessageBuilder = new NetworkMessageBuilder(handler, 1024, MessageRecieveCallback);
-            NetworkMessageWriter networkMessageWriter = new NetworkMessageWriter(handler);
+            var networkClient = CreateNetworkClient(handler);
 
-            _clients.Add(networkMessageWriter);
+            _clients.Add(networkClient);
             Console.WriteLine("Client connected! " + _clients.Count);
-            networkMessageBuilder.Recieve();
         }
 
-        private void MessageRecieveCallback(IAsyncResult asyncResult)
+        private NetworkClient CreateNetworkClient(Socket handler)
         {
-            Console.WriteLine("Server finished receiving message.");
+            var clientId = NEXT_CLIENT_ID++;
+            NetworkMessageReceiver networkMessageReceiver = new NetworkMessageReceiver(clientId, handler, 1024);
+            NetworkMessageWriter networkMessageWriter = new NetworkMessageWriter(handler);
+            NetworkClient networkClient = new NetworkClient(clientId, networkMessageReceiver, networkMessageWriter);
+            networkClient.MessageRecieved += RebroadcastMessage;
+            return networkClient;
         }
 
-
-
+        private void RebroadcastMessage(object sender, NetworkMessageReceivedEventArgs eventArgs)
+        {
+            foreach (NetworkClient networkClient in _clients)
+            {
+                if (networkClient.ClientId != eventArgs.Senderid)
+                {
+                    networkClient.SendMessage(eventArgs.NetworkMessage);
+                }
+            }
+        }
     }
 }

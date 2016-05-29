@@ -1,72 +1,53 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
+using System;
 using System.Threading;
 
 namespace NetworkModel.Networking
 {
-    public class NetworkClient
+    internal class NetworkClient : IDisposable
     {
+        public int ClientId { get; private set; }
+        private readonly NetworkMessageReceiver _networkMessageReceiver;
+        private readonly NetworkMessageWriter _networkMessageWriter;
+        private Thread _receiverThread;
+        private bool _isReceiving;
 
-        private static readonly ManualResetEvent connectionAsyncLock = new ManualResetEvent(false);
+        public event EventHandler<NetworkMessageReceivedEventArgs> MessageRecieved;
 
-        private readonly string _ipString;
-        private NetworkMessageWriter _networkWriter;
-
-        public NetworkClient(string ipString)
+        public NetworkClient(int clientId, NetworkMessageReceiver networkMessageReceiver, NetworkMessageWriter networkMessageWriter)
         {
-            _ipString = ipString;
+            ClientId = clientId;
+            _networkMessageReceiver = networkMessageReceiver;
+            _networkMessageWriter = networkMessageWriter;
+            _networkMessageReceiver.MessageRecieved += ElevateMessageEvent;
+            _isReceiving = true;
+            _receiverThread = new Thread(GetMessages);
+            _receiverThread.Start();
+        }
+
+        private void GetMessages()
+        {
+            while (_isReceiving)
+            {
+                _networkMessageReceiver.Recieve(); ;
+            }
 
         }
 
-        public void Connect()
+        private void ElevateMessageEvent(object sender, NetworkMessageReceivedEventArgs eventArgs)
         {
-            try
-            {
-                IPAddress ipAddress = IPAddress.Parse(_ipString);
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, NetworkConstants.SERVER_PORT);
-
-                Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                _networkWriter = new NetworkMessageWriter(clientSocket);
-
-                clientSocket.BeginConnect(ipEndPoint, ClientConnectCallback, clientSocket);
-                connectionAsyncLock.WaitOne();
-            }
-            catch (Exception e)
-            {
-                throw new NetworkingException(e.Message);
-            }
+            MessageRecieved?.Invoke(sender, eventArgs);
         }
 
-        public void SendMessage(string message)
+        public void SendMessage(NetworkMessage message)
         {
-            if (_networkWriter == null)
-            {
-                throw new NetworkingException("Cannot send message, client is not connected.");
-            }
-            _networkWriter.SendMessage(message);
-        }
-
-        public void Close()
-        {
-            _networkWriter?.Dispose();
-            _networkWriter = null;
-        }
-
-        private void ClientConnectCallback(IAsyncResult ar)
-        {
-            try
-            {
-                Socket client = (Socket)ar.AsyncState;
-                Console.WriteLine($"Client connected to {client.RemoteEndPoint}");
-                connectionAsyncLock.Set();
-            }
-            catch (Exception e)
-            {
-                throw new NetworkingException(e.Message);
-            }
+            _networkMessageWriter.SendMessage(message);
         }
 
 
+        public void Dispose()
+        {
+            _isReceiving = false;
+            _networkMessageWriter.Dispose();
+        }
     }
 }
