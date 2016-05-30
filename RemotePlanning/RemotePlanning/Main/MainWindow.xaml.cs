@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using RemotePlanning.Iteration;
+using RemotePlanning.Main.GameCanvas;
 using RemotePlanning.PlanningSheets;
 using RemotePlanning.PlanningSheets.Control;
 using RemotePlanning.Storycards;
@@ -17,9 +14,13 @@ namespace RemotePlanning.Main
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IMainWindow
     {
         private IterationViewModel _previouslySelectedIteration;
+        private readonly CanvasElementHandler<PlanningSheetControl> _planningSheetHandler;
+        private readonly CanvasElementHandler<StorycardControl> _storycardHandler;
+        public event EventHandler<RoutedEventArgs> WindowLoaded;
+        public event EventHandler<NetworkConnectEventArgs> NetworkConnect;
         public MainWindowViewModel ViewModel { get; private set; }
 
         public MainWindow()
@@ -29,7 +30,16 @@ namespace RemotePlanning.Main
             ViewModel.ZoomViewModel.ScaleX = 0.5;
             ViewModel.ZoomViewModel.ScaleY = 0.5;
             ViewModel.PropertyChanged += SelectedIteration_PropertyChange;
+            _planningSheetHandler = new CanvasElementHandler<PlanningSheetControl>(GameCanvas, 1, 100);
+            _storycardHandler = new CanvasElementHandler<StorycardControl>(GameCanvas, 101, 400);
+            Loaded += RaiseLoaded;
         }
+
+        private void RaiseLoaded(object sender, RoutedEventArgs e)
+        {
+            WindowLoaded?.Invoke(sender, e);
+        }
+
 
         private void SelectedIteration_PropertyChange(object sender, PropertyChangedEventArgs e)
         {
@@ -37,107 +47,19 @@ namespace RemotePlanning.Main
             {
                 if (_previouslySelectedIteration != null)
                 {
-                    _previouslySelectedIteration.PlanningSheets.CollectionChanged -= PlanningSheets_OnChange;
-                    _previouslySelectedIteration.Storycards.CollectionChanged -= Storycards_OnChange;
+                    _previouslySelectedIteration.PlanningSheets.CollectionChanged -= _planningSheetHandler.OnCollectionChange;
+                    _previouslySelectedIteration.Storycards.CollectionChanged -= _storycardHandler.OnCollectionChange;
                 }
-                ClearPlanningSheets();
-                ViewModel.SelectedIteration.PlanningSheets.CollectionChanged += PlanningSheets_OnChange;
-                ViewModel.SelectedIteration.Storycards.CollectionChanged += Storycards_OnChange;
+                _planningSheetHandler.Clear();
+                _storycardHandler.Clear();
+                ViewModel.SelectedIteration.PlanningSheets.CollectionChanged += _planningSheetHandler.OnCollectionChange;
+                ViewModel.SelectedIteration.Storycards.CollectionChanged += _storycardHandler.OnCollectionChange;
                 foreach (PlanningSheetViewModel planningSheetViewModel in ViewModel.SelectedIteration.PlanningSheets)
                 {
-                    AddPlanningSheet(planningSheetViewModel);
+                    _planningSheetHandler.AddToCanvas(planningSheetViewModel);
                 }
                 _previouslySelectedIteration = ViewModel.SelectedIteration;
             }
-        }
-
-        private void ClearPlanningSheets()
-        {
-            GameCanvas.Children
-                .Cast<UIElement>()
-                .OfType<PlanningSheetControl>()
-                .ToList()
-                .ForEach(c => c.PlanningSheetMoved -= ReorderPlanningSheets);
-            GameCanvas.Children.Clear();
-        }
-
-        private void ReorderPlanningSheets(object sender, PlanningSheetMovedArgs e)
-        {
-            var lasControlToMove = e.PlanningSheetControl;
-            int zIndex = 1;
-            GetAllPlanningSheetControls()
-                .ForEach(c =>
-                {
-                    if (c == lasControlToMove)
-                    {
-                        Canvas.SetZIndex(c, 99);
-                    }
-                    else
-                    {
-                        Canvas.SetZIndex(c, zIndex++);
-                    }
-                });
-        }
-        private void ReorderStorycards(object sender, StorycardMovedEventArgs e)
-        {
-            var lasControlToMove = e.StorycardControl;
-            int zIndex = 101;
-            GetAllStorycardControls()
-                 .ForEach(c =>
-                 {
-                     if (c == lasControlToMove)
-                     {
-                         Canvas.SetZIndex(c, 999);
-                     }
-                     else
-                     {
-                         Canvas.SetZIndex(c, zIndex++);
-                     }
-                 });
-        }
-
-        private List<PlanningSheetControl> GetAllPlanningSheetControls()
-        {
-            return GameCanvas.Children
-                .Cast<UIElement>()
-                .OfType<PlanningSheetControl>()
-                .OrderBy(Canvas.GetZIndex)
-                .ToList();
-        }
-        private List<StorycardControl> GetAllStorycardControls()
-        {
-            return GameCanvas.Children
-                .Cast<UIElement>()
-                .OfType<StorycardControl>()
-                .OrderBy(Canvas.GetZIndex)
-                .ToList();
-        }
-
-        private void PlanningSheets_OnChange(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            e.NewItems.Cast<PlanningSheetViewModel>().ToList().ForEach(AddPlanningSheet);
-        }
-        private void Storycards_OnChange(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            e.NewItems.Cast<PlacedStorycardViewModel>().ToList().ForEach(AddStoryCard);
-        }
-
-        private void AddStoryCard(PlacedStorycardViewModel storycardViewModel)
-        {
-            var storycardControl = new StorycardControl() { DataContext = storycardViewModel };
-            storycardControl.StorycardMoved += ReorderStorycards;
-            Canvas.SetTop(storycardControl, new Random().Next(10, 500));
-            Canvas.SetLeft(storycardControl, new Random().Next(10, 500));
-            GameCanvas.Children.Add(storycardControl);
-        }
-
-        private void AddPlanningSheet(PlanningSheetViewModel planningSheetViewModel)
-        {
-            var planningSheetControl = new PlanningSheetControl() { DataContext = planningSheetViewModel };
-            planningSheetControl.PlanningSheetMoved += ReorderPlanningSheets;
-            Canvas.SetTop(planningSheetControl, new Random().Next(10, 500));
-            Canvas.SetLeft(planningSheetControl, new Random().Next(10, 500));
-            GameCanvas.Children.Add(planningSheetControl);
         }
 
         private void Canvas_OnMouseWheel(object sender, MouseWheelEventArgs mouseArgs)

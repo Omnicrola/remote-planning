@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using RemotePlanning.Main.GameCanvas;
 
 namespace RemotePlanning.Storycards.Control
 {
     /// <summary>
     /// Interaction logic for StorycardControl.xaml
     /// </summary>
-    public partial class StorycardControl : UserControl
+    public partial class StorycardControl : IMoveableElement
     {
 
-        public event EventHandler<StorycardMovedEventArgs> StorycardMoved;
+        public event EventHandler<ElementMovedEventArgs> ElementMoved;
 
         public StorycardControl()
         {
@@ -25,22 +26,13 @@ namespace RemotePlanning.Storycards.Control
             Canvas.SetLeft(this, newLeft);
             Canvas.SetTop(this, newTop);
 
-            Raise_StorycardMoved(new StorycardMovedEventArgs(this));
+            Raise_StorycardMoved(new ElementMovedEventArgs(this, e.HorizontalChange, e.VerticalChange));
         }
 
-        private void Raise_StorycardMoved(StorycardMovedEventArgs storycardMovedEventArgs)
+        private void Raise_StorycardMoved(ElementMovedEventArgs storycardMovedEventArgs)
         {
-            StorycardMoved?.Invoke(this, storycardMovedEventArgs);
+            ElementMoved?.Invoke(this, storycardMovedEventArgs);
         }
     }
 
-    public class StorycardMovedEventArgs : EventArgs
-    {
-        public StorycardMovedEventArgs(StorycardControl storycardControl)
-        {
-            StorycardControl = storycardControl;
-        }
-
-        public StorycardControl StorycardControl { get; private set; }
-    }
 }

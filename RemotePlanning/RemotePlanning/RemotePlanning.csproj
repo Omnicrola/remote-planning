@@ -55,14 +55,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CommandQueue.cs" />
     <Compile Include="Data\PlanningGameManager.cs" />
+    <Compile Include="Data\StubDataLoader.cs" />
     <Compile Include="Iteration\IterationViewModel.cs" />
     <Compile Include="Iteration\SelectIterationWindow.xaml.cs">
       <DependentUpon>SelectIterationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main\GameCanvas\CanvasElementHandler.cs" />
     <Compile Include="Main\CanvasZoomViewModel.cs" />
+    <Compile Include="Main\GameCanvas\ElementMovedEventArgs.cs" />
+    <Compile Include="Main\GameCanvas\IViewModelFactory.cs" />
+    <Compile Include="Main\IMainWindow.cs" />
     <Compile Include="Main\MainWindowViewModel.cs" />
+    <Compile Include="Main\NetworkConnectEventArgs.cs" />
+    <Compile Include="Main\PassThroughViewModelFactory.cs" />
+    <Compile Include="Main\PlaceableStorycardViewModelFactory.cs" />
     <Compile Include="Main\SelectIterationViewModel.cs" />
+    <Compile Include="Main\GameCanvas\IMoveableElement.cs" />
     <Compile Include="PlanningSheets\Control\MouseDragHelper.cs" />
     <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
     <Compile Include="PlanningSheets\Control\PlanningSheetControl.xaml.cs">

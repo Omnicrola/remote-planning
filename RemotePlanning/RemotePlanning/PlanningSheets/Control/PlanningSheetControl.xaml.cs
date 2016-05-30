@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using RemotePlanning.Main;
+using RemotePlanning.Main.GameCanvas;
 
 namespace RemotePlanning.PlanningSheets.Control
 {
     /// <summary>
-    /// Interaction logic for PlanningSheetControl.xaml
+    /// Interaction logic for MovedElement.xaml
     /// </summary>
-    public partial class PlanningSheetControl
+    public partial class PlanningSheetControl : IMoveableElement
     {
         private readonly MouseDragHelper _mouseDragHelper;
 
-        public event EventHandler<PlanningSheetMovedArgs> PlanningSheetMoved;
+        public event EventHandler<ElementMovedEventArgs> ElementMoved;
 
         public PlanningSheetControl()
         {
@@ -23,7 +25,7 @@ namespace RemotePlanning.PlanningSheets.Control
 
         private void Raise_StorycardMoved(object sender, DragDeltaEventArgs deltaArgs)
         {
-            PlanningSheetMoved?.Invoke(this, new PlanningSheetMovedArgs(this, deltaArgs.HorizontalChange, deltaArgs.VerticalChange));
+            ElementMoved?.Invoke(this, new ElementMovedEventArgs(this, deltaArgs.HorizontalChange, deltaArgs.VerticalChange));
         }
 
         private void Self_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -39,20 +41,6 @@ namespace RemotePlanning.PlanningSheets.Control
         private void Self_OnMouseMove(object sender, MouseEventArgs e)
         {
             _mouseDragHelper.MouseMove(e);
-        }
-    }
-
-    public class PlanningSheetMovedArgs : EventArgs
-    {
-        public PlanningSheetControl PlanningSheetControl { get; private set; }
-        public double HorizontalChange { get; private set; }
-        public double VerticalChange { get; private set; }
-
-        public PlanningSheetMovedArgs(PlanningSheetControl planningSheetControl, double horizontalChange, double verticalChange)
-        {
-            PlanningSheetControl = planningSheetControl;
-            HorizontalChange = horizontalChange;
-            VerticalChange = verticalChange;
         }
     }
 }
