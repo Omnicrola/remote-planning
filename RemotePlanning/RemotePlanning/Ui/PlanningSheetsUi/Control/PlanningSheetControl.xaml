@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:planningSheetsUi="clr-namespace:RemotePlanning.Ui.PlanningSheetsUi"
              mc:Ignorable="d" 
-             Canvas.Left="1"
-             Canvas.Top="1"
+             Canvas.Left="{Binding CanvasX}"
+             Canvas.Top="{Binding CanvasY}"
              Canvas.ZIndex="99"
              Width="550"
              Height="850"
@@ -13,7 +14,7 @@
              MouseDown="Self_OnMouseDown"
              MouseUp="Self_OnMouseUp"
              MouseMove="Self_OnMouseMove"
-             d:DataContext="{d:DesignInstance planningSheets:PlanningSheetViewModel}"
+             d:DataContext="{d:DesignInstance planningSheetsUi:PlanningSheetViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style x:Key="StorycardFont" TargetType="TextBlock">

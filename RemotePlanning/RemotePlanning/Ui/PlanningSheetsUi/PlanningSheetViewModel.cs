@@ -11,12 +11,15 @@ using RemotePlanning.Ui.ViewModels;
 namespace RemotePlanning.Ui.PlanningSheetsUi
 {
     [DataContract]
-    public class PlanningSheetViewModel : ViewModel
+    public class PlanningSheetViewModel : ViewModel, IMoveableViewModel
     {
         private string _role;
         private SolidColorBrush _color;
 
         private bool _isNotCurrentlySorting;
+        private double _canvasX;
+        private double _canvasY;
+        private int _zIndex;
 
         public PlanningSheetViewModel()
         {
@@ -60,7 +63,25 @@ namespace RemotePlanning.Ui.PlanningSheetsUi
             set { Color = new SolidColorBrush(value); }
         }
 
+        [DataMember]
+        public double CanvasX
+        {
+            get { return _canvasX; }
+            set { SetPropertyField(ref _canvasX, value); }
+        }
+
+        [DataMember]
+        public double CanvasY
+        {
+            get { return _canvasY; }
+            set { SetPropertyField(ref _canvasY, value); }
+        }
+
+        [DataMember]
+        public int ZIndex
+        {
+            get { return _zIndex; }
+            set { SetPropertyField(ref _zIndex, value); }
+        }
     }
-
-
 }

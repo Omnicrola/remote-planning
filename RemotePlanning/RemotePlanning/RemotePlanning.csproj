@@ -92,6 +92,7 @@
     <Compile Include="Ui\MainUi\GameCanvas\IMoveableElement.cs" />
     <Compile Include="Operations\StartNetworkHostingOperation.cs" />
     <Compile Include="Ui\PlanningSheetsUi\Control\MouseDragHelper.cs" />
+    <Compile Include="Ui\PlanningSheetsUi\IMoveableViewModel.cs" />
     <Compile Include="Ui\PlanningSheetsUi\PlanningSheetViewModel.cs" />
     <Compile Include="Ui\PlanningSheetsUi\Control\PlanningSheetControl.xaml.cs">
       <DependentUpon>PlanningSheetControl.xaml</DependentUpon>

@@ -18,18 +18,18 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
         {
             InitializeComponent();
             _mouseDragHelper = new MouseDragHelper(this);
-            _mouseDragHelper.MouseDrag += Raise_StorycardMoved;
+            _mouseDragHelper.MouseDrag += Raise_PlanningSheetMoved;
         }
 
 
-        private void Raise_StorycardMoved(object sender, DragDeltaEventArgs deltaArgs)
+        private void Raise_PlanningSheetMoved(object sender, DragDeltaEventArgs deltaArgs)
         {
             ElementMoved?.Invoke(this, new ElementMovedEventArgs(this, deltaArgs.HorizontalChange, deltaArgs.VerticalChange));
         }
 
         private void Self_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _mouseDragHelper.MouseDown(e);
+            _mouseDragHelper.MouseDown(e, DataContext as IMoveableViewModel);
         }
 
         private void Self_OnMouseUp(object sender, MouseButtonEventArgs e)
@@ -39,7 +39,7 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
 
         private void Self_OnMouseMove(object sender, MouseEventArgs e)
         {
-            _mouseDragHelper.MouseMove(e);
+            _mouseDragHelper.MouseMove(e, DataContext as IMoveableViewModel);
         }
     }
 }

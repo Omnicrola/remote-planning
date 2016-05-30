@@ -10,6 +10,9 @@ namespace RemotePlanning.Ui.StorycardsUi
         private string _title;
         private string _content;
         private int _estimate;
+        private double _canvasX;
+        private double _canvasY;
+        private int _zIndex;
 
         [DataMember]
         public string Role
@@ -38,5 +41,27 @@ namespace RemotePlanning.Ui.StorycardsUi
             get { return _estimate; }
             set { SetPropertyField(ref _estimate, value); }
         }
+
+        [DataMember]
+        public double CanvasX
+        {
+            get { return _canvasX; }
+            set { SetPropertyField(ref _canvasX, value); }
+        }
+
+        [DataMember]
+        public double CanvasY
+        {
+            get { return _canvasY; }
+            set { SetPropertyField(ref _canvasY, value); }
+        }
+
+        [DataMember]
+        public int ZIndex
+        {
+            get { return _zIndex; }
+            set { SetPropertyField(ref _zIndex, value); }
+        }
+
     }
 }

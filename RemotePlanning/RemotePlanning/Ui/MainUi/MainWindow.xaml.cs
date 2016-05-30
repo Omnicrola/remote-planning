@@ -68,6 +68,10 @@ namespace RemotePlanning.Ui.MainUi
                 {
                     _planningSheetHandler.AddToCanvas(planningSheetViewModel);
                 }
+                foreach (PlacedStorycardViewModel storycard in ViewModel.SelectedIteration.Storycards)
+                {
+                    _storycardHandler.AddToCanvas(storycard);
+                }
                 _previouslySelectedIteration = ViewModel.SelectedIteration;
             }
         }

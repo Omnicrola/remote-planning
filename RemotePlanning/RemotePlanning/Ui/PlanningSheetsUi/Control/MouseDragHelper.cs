@@ -19,15 +19,15 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
 
         public event EventHandler<DragDeltaEventArgs> MouseDrag;
 
-        public void MouseDown(MouseButtonEventArgs mouseButtonEventArgs)
+        public void MouseDown(MouseButtonEventArgs mouseButtonEventArgs, IMoveableViewModel moveableViewModel)
         {
             _isMouseDown = true;
 
-            Canvas.SetZIndex(_parentControl, 999);
+            moveableViewModel.ZIndex = 999;
             _startPosition = mouseButtonEventArgs.GetPosition(_parentControl);
         }
 
-        public void MouseMove(MouseEventArgs mouseEventArgs)
+        public void MouseMove(MouseEventArgs mouseEventArgs, IMoveableViewModel moveableViewModel)
         {
             if (_isMouseDown)
             {
@@ -35,7 +35,7 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
                 var delta = currentPosition.Delta(_startPosition);
                 if (delta.HorizontalChange != 0 || delta.VerticalChange != 0)
                 {
-                    OnMouseDragDelta(delta);
+                    OnMouseDragDelta(delta, moveableViewModel);
                 }
             }
         }
@@ -45,13 +45,10 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
             _isMouseDown = false;
         }
 
-        private void OnMouseDragDelta(DragDeltaEventArgs delta)
+        private void OnMouseDragDelta(DragDeltaEventArgs delta, IMoveableViewModel moveableViewModel)
         {
-            var newLeft = Canvas.GetLeft(_parentControl) + delta.HorizontalChange;
-            var newTop = Canvas.GetTop(_parentControl) + delta.VerticalChange;
-
-            Canvas.SetLeft(_parentControl, newLeft);
-            Canvas.SetTop(_parentControl, newTop);
+            moveableViewModel.CanvasX += delta.HorizontalChange;
+            moveableViewModel.CanvasY += delta.VerticalChange;
 
             Raise_MovedEvent(delta);
         }

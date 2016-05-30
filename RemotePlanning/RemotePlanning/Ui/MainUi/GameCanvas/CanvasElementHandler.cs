@@ -33,8 +33,7 @@ namespace RemotePlanning.Ui.MainUi.GameCanvas
             var control = Activator.CreateInstance<T>();
             control.DataContext = obj;
             control.ElementMoved += ReorderZIndexes;
-            Canvas.SetTop(control, new Random().Next(10, 500));
-            Canvas.SetLeft(control, new Random().Next(10, 500));
+
             _canvas.Children.Add(control);
 
         }
