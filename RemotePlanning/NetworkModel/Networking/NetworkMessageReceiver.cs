@@ -8,11 +8,11 @@ namespace NetworkModel.Networking
     public class NetworkMessageReceiver : IDisposable
     {
         private readonly int _clientid;
-        private readonly Socket _workSocket;
+        private Socket _workSocket;
         private readonly int _bufferSize;
         private readonly StringBuilder _stringBuilder;
 
-        public ManualResetEvent RECEIVE_ACCEPT_EVENT = new ManualResetEvent(false);
+        private readonly AutoResetEvent RECEIVE_ACCEPT_EVENT = new AutoResetEvent(false);
 
         public event EventHandler<NetworkMessageReceivedEventArgs> MessageRecieved;
 
@@ -22,15 +22,18 @@ namespace NetworkModel.Networking
             _workSocket = workSocket;
             _bufferSize = bufferSize;
             _stringBuilder = new StringBuilder();
+            Console.WriteLine("new Reciever");
         }
 
 
         public void Recieve()
         {
-            NetworkPacket networkPacket = new NetworkPacket(_bufferSize);
-            ContinueReceiving(networkPacket);
-            RECEIVE_ACCEPT_EVENT.WaitOne();
-
+            if (_workSocket != null)
+            {
+                NetworkPacket networkPacket = new NetworkPacket(_bufferSize);
+                ContinueReceiving(networkPacket);
+                RECEIVE_ACCEPT_EVENT.WaitOne();
+            }
         }
 
         private void ContinueReceiving(NetworkPacket networkPacket)
@@ -40,29 +43,37 @@ namespace NetworkModel.Networking
 
         private void ReadCallback(IAsyncResult asyncResult)
         {
-            int bytesRead = _workSocket.EndReceive(asyncResult);
-            NetworkPacket networkPacket = (NetworkPacket)asyncResult.AsyncState;
-            if (bytesRead > 0)
+            try
             {
-                StoreData(bytesRead, networkPacket);
+                int bytesRead = _workSocket.EndReceive(asyncResult);
+                NetworkPacket networkPacket = (NetworkPacket)asyncResult.AsyncState;
+                if (bytesRead > 0)
+                {
+                    StoreData(bytesRead, networkPacket);
 
-                if (MessageTerminatorRecieved())
-                {
-                    Console.WriteLine("Read {0} bytes from socket. ",
-                        _stringBuilder.ToString().Length);
-                    ParseMessages();
-                }
-                else
-                {
-                    ContinueReceiving(networkPacket);
+                    if (MessageTerminatorRecieved())
+                    {
+                        Console.WriteLine("Read {0} bytes from socket. ",
+                            _stringBuilder.ToString().Length);
+                        ParseMessages();
+                        RECEIVE_ACCEPT_EVENT.Set();
+                    }
+                    else
+                    {
+                        ContinueReceiving(networkPacket);
+                    }
                 }
             }
-            RECEIVE_ACCEPT_EVENT.Set();
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         private void ParseMessages()
         {
-            string[] messages = _stringBuilder.ToString().Split(new string[] { NetworkConstants.MESSAGE_TERMINATOR }, StringSplitOptions.RemoveEmptyEntries);
+            var data = _stringBuilder.ToString();
+            string[] messages = data.Split(new string[] { NetworkConstants.MESSAGE_TERMINATOR }, StringSplitOptions.RemoveEmptyEntries);
             _stringBuilder.Clear();
 
             string singleMessage = String.Empty;
@@ -72,6 +83,7 @@ namespace NetworkModel.Networking
                 try
                 {
                     NetworkMessage networkMessage = NetworkMessage.Deserialize(singleMessage);
+                    Console.WriteLine("RECEIVE: " + networkMessage.Message);
                     MessageRecieved?.Invoke(this, new NetworkMessageReceivedEventArgs(_clientid, networkMessage));
                 }
                 catch (NetworkSerializationException e)
@@ -98,17 +110,7 @@ namespace NetworkModel.Networking
         {
             RECEIVE_ACCEPT_EVENT.Set();
             _workSocket.Dispose();
+            _workSocket = null;
         }
-    }
-
-    public class NetworkPacket
-    {
-
-        public NetworkPacket(int bufferSize)
-        {
-            Buffer = new byte[bufferSize];
-        }
-
-        public byte[] Buffer { get; set; }
     }
 }

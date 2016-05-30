@@ -12,13 +12,13 @@ namespace NetworkModel.Networking
 
         private static readonly ManualResetEvent _serverAcceptManualEvent = new ManualResetEvent(false);
         private bool _isRunning;
-        private readonly List<NetworkClient> _clients;
+        private readonly List<NetworkConnection> _clients;
         private readonly string _ipString;
 
         public NetworkServerConnection(string ipString)
         {
             _ipString = ipString;
-            _clients = new List<NetworkClient>();
+            _clients = new List<NetworkConnection>();
         }
 
         public void Start()
@@ -67,19 +67,22 @@ namespace NetworkModel.Networking
             Console.WriteLine("Client connected! " + _clients.Count);
         }
 
-        private NetworkClient CreateNetworkClient(Socket handler)
+        private NetworkConnection CreateNetworkClient(Socket handler)
         {
             var clientId = NEXT_CLIENT_ID++;
             NetworkMessageReceiver networkMessageReceiver = new NetworkMessageReceiver(clientId, handler, 1024);
             NetworkMessageWriter networkMessageWriter = new NetworkMessageWriter(handler);
-            NetworkClient networkClient = new NetworkClient(clientId, networkMessageReceiver, networkMessageWriter);
-            networkClient.MessageRecieved += RebroadcastMessage;
-            return networkClient;
+            NetworkConnection networkConnection = new NetworkConnection(clientId, networkMessageReceiver, networkMessageWriter);
+            networkConnection.MessageRecieved += RebroadcastMessage;
+            return networkConnection;
         }
 
         private void RebroadcastMessage(object sender, NetworkMessageReceivedEventArgs eventArgs)
         {
-            foreach (NetworkClient networkClient in _clients)
+            Console.WriteLine($"Rebroadcasting message from ({eventArgs.Senderid}) : {eventArgs.NetworkMessage.Message}");
+            foreach (
+
+                NetworkConnection networkClient in _clients)
             {
                 if (networkClient.ClientId != eventArgs.Senderid)
                 {

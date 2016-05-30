@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace NetworkModel.Networking
 {
-    internal class NetworkClient : IDisposable
+    internal class NetworkConnection : IDisposable
     {
         public int ClientId { get; private set; }
         private readonly NetworkMessageReceiver _networkMessageReceiver;
@@ -13,7 +13,7 @@ namespace NetworkModel.Networking
 
         public event EventHandler<NetworkMessageReceivedEventArgs> MessageRecieved;
 
-        public NetworkClient(int clientId, NetworkMessageReceiver networkMessageReceiver, NetworkMessageWriter networkMessageWriter)
+        public NetworkConnection(int clientId, NetworkMessageReceiver networkMessageReceiver, NetworkMessageWriter networkMessageWriter)
         {
             ClientId = clientId;
             _networkMessageReceiver = networkMessageReceiver;
