@@ -49,6 +49,7 @@ namespace NetworkModel.Networking
 
         public void Close()
         {
+            Console.WriteLine("Shutting down client connection...");
             _networkWriter?.Dispose();
             _networkWriter = null;
         }

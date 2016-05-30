@@ -14,6 +14,7 @@ namespace NetworkModel.Networking
         private bool _isRunning;
         private readonly List<NetworkConnection> _clients;
         private readonly string _ipString;
+        private Thread _thread;
 
         public NetworkServerConnection(string ipString)
         {
@@ -22,6 +23,13 @@ namespace NetworkModel.Networking
         }
 
         public void Start()
+        {
+            _thread = new Thread(Run);
+            _thread.Name = "Network Server";
+            _thread.Start();
+        }
+
+        private void Run()
         {
             IPAddress ipAddress = IPAddress.Parse(_ipString);
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, NetworkConstants.SERVER_PORT);
@@ -49,6 +57,7 @@ namespace NetworkModel.Networking
 
         public void StopServer()
         {
+            Console.WriteLine("Shutting down server...");
             _isRunning = false;
             _serverAcceptManualEvent.Set();
             _clients.ForEach(c => c.Dispose());

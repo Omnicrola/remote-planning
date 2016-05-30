@@ -1,3 +1,5 @@
+using System;
+using NetworkModel.Networking;
 using RemotePlanning.Network;
 using RemotePlanning.Operations;
 
@@ -14,10 +16,18 @@ namespace RemotePlanning.Data
             _address = address;
         }
 
-        public override string Description { get; }
+        public override string Description => "Connect to remote server";
+
         protected override void DoWorkInternal()
         {
-            _networkManager.Connect(_address);
+            try
+            {
+                _networkManager.Connect(_address);
+            }
+            catch (NetworkingException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
