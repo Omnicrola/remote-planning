@@ -5,10 +5,11 @@ using RemotePlanning.Operations;
 
 namespace RemotePlanning.Data
 {
-    internal class ConnectToServerOperation : AsyncDiscreetOperation
+    internal class ConnectToServerOperation : IDiscreetOperation
     {
         private readonly NetworkManager _networkManager;
         private readonly string _address;
+        public string Description => "Connect to remote server";
 
         public ConnectToServerOperation(NetworkManager networkManager, string address)
         {
@@ -16,18 +17,29 @@ namespace RemotePlanning.Data
             _address = address;
         }
 
-        public override string Description => "Connect to remote server";
+        public event EventHandler<OperationEventArgs> OperationStatus;
 
-        protected override void DoWorkInternal()
+        public void DoWork()
         {
+            SendStatusMessage("Connecting to server...");
             try
             {
                 _networkManager.Connect(_address);
+                SendStatusMessage("Connected!");
             }
             catch (NetworkingException e)
             {
-                Console.WriteLine(e.Message);
+                SendStatusMessage("Error connecting : " + e.Message);
             }
         }
+
+        private void SendStatusMessage(string message)
+        {
+            OperationStatus?.Invoke(this, new OperationEventArgs(message));
+        }
+
+
+
+
     }
 }

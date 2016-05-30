@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
+using RemotePlanning.Operations;
 
 namespace RemotePlanning.Commands
 {
@@ -13,6 +15,8 @@ namespace RemotePlanning.Commands
         private readonly Dispatcher _mainThreadDispatcher;
         private readonly Thread _thread;
         private bool _isRunning;
+
+        public event EventHandler<OperationEventArgs> OperationStatus;
 
 
         public OperationsQueue(Dispatcher mainThreadDispatcher)
@@ -60,9 +64,16 @@ namespace RemotePlanning.Commands
             if (_operationsToDo.Count > 0)
             {
                 var currentOperation = _operationsToDo.Dequeue();
-                currentOperation.DoWork(_mainThreadDispatcher);
+                currentOperation.OperationStatus += SendStatusUpdate;
+                currentOperation.DoWork();
+                currentOperation.OperationStatus -= SendStatusUpdate;
             }
 
+        }
+
+        private void SendStatusUpdate(object sender, OperationEventArgs e)
+        {
+            _mainThreadDispatcher.InvokeAsync(() => OperationStatus?.Invoke(sender, e));
         }
 
         public void Dispose()

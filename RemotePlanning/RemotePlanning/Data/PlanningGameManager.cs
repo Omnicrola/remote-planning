@@ -29,6 +29,12 @@ namespace RemotePlanning.Data
 
             mainWindow.NetworkConnect += WindowOnNetworkConnect;
             mainWindow.HostNetworkSession += WindowOnHostNetworkSession;
+            _operationQueue.OperationStatus += Operation_OnStatusMessage;
+        }
+
+        private void Operation_OnStatusMessage(object sender, OperationEventArgs e)
+        {
+            _mainWindow.AddStatusMessage(e.Message);
         }
 
         private void WindowOnHostNetworkSession(object sender, NetworkHostEventArgs e)

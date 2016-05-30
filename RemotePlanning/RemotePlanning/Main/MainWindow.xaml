@@ -46,7 +46,7 @@
             </Canvas>
         </ScrollViewer>
         <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock>Ready</TextBlock>
+            <TextBlock FontSize="14" Name="StatusText" Text="Ready"/>
         </StatusBar>
     </Grid>
 </Window>

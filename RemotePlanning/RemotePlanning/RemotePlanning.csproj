@@ -55,13 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\ConnectToServerOperation.cs" />
+    <Compile Include="Operations\ConnectToServerOperation.cs" />
     <Compile Include="Network\NetworkConnectWindow.xaml.cs">
       <DependentUpon>NetworkConnectWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Network\NetworkHostEventArgs.cs" />
     <Compile Include="Network\NetworkManager.cs" />
-    <Compile Include="Operations\AsyncDiscreetOperation.cs" />
     <Compile Include="Operations\IDiscreetOperation.cs" />
     <Compile Include="Operations\OperationEventArgs.cs" />
     <Compile Include="Operations\OperationQueue.cs" />

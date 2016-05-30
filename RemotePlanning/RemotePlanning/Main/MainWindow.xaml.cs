@@ -123,5 +123,11 @@ namespace RemotePlanning.Main
         {
             HostNetworkSession?.Invoke(this, new NetworkHostEventArgs());
         }
+
+        public void AddStatusMessage(string message)
+        {
+            StatusText.Text = message;
+        }
+
     }
 }

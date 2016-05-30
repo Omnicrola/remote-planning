@@ -1,14 +1,13 @@
 using System;
 using System.Windows.Threading;
 
-namespace RemotePlanning.Commands
+namespace RemotePlanning.Operations
 {
     internal interface IDiscreetOperation
     {
-        event EventHandler<OperationEventArgs> OperationStarted;
-        event EventHandler<OperationEventArgs> OperationFinished;
+        event EventHandler<OperationEventArgs> OperationStatus;
 
-        void DoWork(Dispatcher mainThreadDispatcher);
+        void DoWork();
 
         string Description { get; }
 

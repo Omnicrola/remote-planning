@@ -11,5 +11,6 @@ namespace RemotePlanning.Main
         event EventHandler<NetworkConnectEventArgs> NetworkConnect;
         event EventHandler<NetworkHostEventArgs> HostNetworkSession;
         MainWindowViewModel ViewModel { get; }
+        void AddStatusMessage(string message);
     }
 }
