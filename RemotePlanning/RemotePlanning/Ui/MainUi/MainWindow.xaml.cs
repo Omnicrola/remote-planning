@@ -82,6 +82,21 @@ namespace RemotePlanning.Ui.MainUi
             mouseArgs.Handled = true;
         }
 
+        private void Canvas_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViewModel.ZoomViewModel.MouseDown(CanvasContainer, e);
+        }
+
+        private void Canvas_OnMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ViewModel.ZoomViewModel.MouseUp(CanvasContainer, e);
+        }
+
+        private void Canvas_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            ViewModel.ZoomViewModel.MouseMove(CanvasContainer, e);
+        }
+
         private void AddCards_OnClick(object sender, RoutedEventArgs e)
         {
             var storycardBatchLoadWindow = new StorycardBatchLoadWindow() { Owner = this };
@@ -140,6 +155,7 @@ namespace RemotePlanning.Ui.MainUi
         {
             StatusText.Text = message;
         }
+
 
     }
 }

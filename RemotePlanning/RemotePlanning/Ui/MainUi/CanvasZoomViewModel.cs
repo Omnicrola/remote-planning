@@ -1,5 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using RemotePlanning.Ui.PlanningSheetsUi.Control;
 using RemotePlanning.Ui.ViewModels;
 
 namespace RemotePlanning.Ui.MainUi
@@ -12,6 +14,8 @@ namespace RemotePlanning.Ui.MainUi
         private double _scaleY;
         private double _offsetX;
         private double _offsetY;
+        private bool _isDraggingCanvas;
+        private Point _lastMouseDragPosition;
 
         public CanvasZoomViewModel()
         {
@@ -78,6 +82,29 @@ namespace RemotePlanning.Ui.MainUi
             ScaleY = 1.0;
             OffsetX = 0;
             OffsetY = 0;
+        }
+
+        public void MouseMove(ScrollViewer zoomContainer, MouseEventArgs mouseEventArgs)
+        {
+            if (_isDraggingCanvas)
+            {
+                var newPosition = mouseEventArgs.GetPosition(zoomContainer);
+                var delta = newPosition.Delta(_lastMouseDragPosition);
+                OffsetX += delta.HorizontalChange;
+                OffsetY += delta.VerticalChange;
+                _lastMouseDragPosition = newPosition;
+            }
+        }
+
+        public void MouseUp(ScrollViewer zoomContainer, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            _isDraggingCanvas = false;
+        }
+
+        public void MouseDown(ScrollViewer zoomContainer, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            _isDraggingCanvas = true;
+            _lastMouseDragPosition = mouseButtonEventArgs.GetPosition(zoomContainer);
         }
     }
 }

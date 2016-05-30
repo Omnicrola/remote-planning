@@ -25,6 +25,7 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
 
             moveableViewModel.ZIndex = 999;
             _startPosition = mouseButtonEventArgs.GetPosition(_parentControl);
+            mouseButtonEventArgs.Handled = true;
         }
 
         public void MouseMove(MouseEventArgs mouseEventArgs, IMoveableViewModel moveableViewModel)
@@ -37,12 +38,14 @@ namespace RemotePlanning.Ui.PlanningSheetsUi.Control
                 {
                     OnMouseDragDelta(delta, moveableViewModel);
                 }
+                mouseEventArgs.Handled = true;
             }
         }
 
         public void MouseUp(MouseButtonEventArgs mouseButtonEventArgs)
         {
             _isMouseDown = false;
+            mouseButtonEventArgs.Handled = true;
         }
 
         private void OnMouseDragDelta(DragDeltaEventArgs delta, IMoveableViewModel moveableViewModel)

@@ -4,12 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemotePlanning"
+        xmlns:mainUi="clr-namespace:RemotePlanning.Ui.MainUi"
         mc:Ignorable="d"
         Title="Remote Planning" 
         WindowStartupLocation="CenterScreen"
-        d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
+        d:DataContext="{d:DesignInstance mainUi:MainWindowViewModel}"
         Width="1024"
         Height="768">
+    <Window.Resources>
+        <Style x:Key="CanvasStyle" TargetType="Canvas" >
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid x:Name="WindowPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -33,7 +43,15 @@
                       Grid.Column="1"
                       Grid.Row="0"
                       x:Name="CanvasContainer">
-            <Canvas x:Name="GameCanvas" PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
+            <Canvas x:Name="GameCanvas" 
+                    PreviewMouseWheel="Canvas_OnMouseWheel"
+                    MouseDown="Canvas_OnMouseDown"
+                    MouseUp="Canvas_OnMouseUp"
+                    MouseMove="Canvas_OnMouseMove"
+                    Background="White" 
+                    Width="5000" 
+                    Height="2000"
+                    Style="{StaticResource CanvasStyle}">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="{Binding ZoomViewModel.ScaleX}" ScaleY="{Binding ZoomViewModel.ScaleY}"/>
