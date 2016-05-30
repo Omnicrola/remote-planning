@@ -21,18 +21,25 @@ namespace RemotePlanning.Ui.ViewModels
 
         public void ClearAndLoad(ApplicationDataStore applicationDataStore)
         {
-            _mainWindow.ViewModel.SelectedIteration = null;
-            _mainWindow.ViewModel.Projects.Clear();
-            _mainWindow.ViewModel.SelectedIteration = null;
-            _mainWindow.ViewModel.ZoomViewModel.Reset();
+            var mainWindowViewModel = _mainWindow.ViewModel;
 
+            mainWindowViewModel.Projects.Clear();
+            mainWindowViewModel.ZoomViewModel.Reset();
+
+            applicationDataStore.Projects.ToList().ForEach(project => mainWindowViewModel.Projects.Add(project));
+            mainWindowViewModel.SelectedIteration = applicationDataStore.SelectedIteration;
+            mainWindowViewModel.SelectedIteration = applicationDataStore.SelectedIteration;
         }
 
         public ApplicationDataStore ExtractData()
         {
-            var applicationDataStore = new ApplicationDataStore();
-            applicationDataStore.Projects = _mainWindow.ViewModel.Projects.ToList();
-            CreateFakeData(applicationDataStore);
+            var applicationDataStore = new ApplicationDataStore
+            {
+                Projects = _mainWindow.ViewModel.Projects.ToList(),
+                SelectedIteration = _mainWindow.ViewModel.SelectedIteration,
+                SelectedProject = _mainWindow.ViewModel.SelectedProject
+            };
+            //            CreateFakeData(applicationDataStore);
             return applicationDataStore;
         }
 
@@ -77,6 +84,8 @@ namespace RemotePlanning.Ui.ViewModels
 
 
             applicationDataStore.Projects.Add(projectViewModel);
+            applicationDataStore.SelectedIteration = iterationViewModel;
+            applicationDataStore.SelectedProject = projectViewModel;
         }
     }
 }
