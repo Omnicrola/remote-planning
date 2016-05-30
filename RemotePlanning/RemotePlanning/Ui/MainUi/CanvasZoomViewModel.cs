@@ -71,5 +71,13 @@ namespace RemotePlanning.Ui.MainUi
                 OffsetY += offsetIncrmentY;
             }
         }
+
+        public void Reset()
+        {
+            ScaleX = 1.0;
+            ScaleY = 1.0;
+            OffsetX = 0;
+            OffsetY = 0;
+        }
     }
 }

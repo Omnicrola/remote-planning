@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\ApplicationDataStore.cs" />
     <Compile Include="Data\BusinessObjects\Iteration.cs" />
     <Compile Include="Data\BusinessObjects\PlanningSheet.cs" />
     <Compile Include="Data\BusinessObjects\Project.cs" />

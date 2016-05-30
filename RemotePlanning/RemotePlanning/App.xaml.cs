@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Windows;
 using NetworkModel.Networking;
 using RemotePlanning.Data;
 using RemotePlanning.Network;
 using RemotePlanning.Operations;
+using RemotePlanning.Ui.IterationUi;
 using RemotePlanning.Ui.MainUi;
+using RemotePlanning.Ui.ProjectsUi;
+using RemotePlanning.Ui.StorycardsUi;
 using RemotePlanning.Ui.ViewModels;
 
 namespace RemotePlanning
@@ -28,11 +33,17 @@ namespace RemotePlanning
         {
             var commandQueue = new OperationsQueue(mainWindow.Dispatcher);
             var networkManager = new NetworkManager();
-            var stubDataLoader = new StubDataLoader();
-            var viewModelParser = new ViewModelParser();
+            var stubDataLoader = new XmlDataPersister(CreateDataContractSerializer());
+            var viewModelParser = new ViewModelParser(mainWindow);
             var planningGameManager = new PlanningGameManager(mainWindow, commandQueue, networkManager, stubDataLoader,
                 viewModelParser);
             return planningGameManager;
+        }
+
+        private static DataContractSerializer CreateDataContractSerializer()
+        {
+            IEnumerable<Type> knownTypes = new List<Type> { typeof(ProjectViewModel), typeof(IterationViewModel), typeof(StorycardViewModel), typeof(PlacedStorycardViewModel) };
+            return new DataContractSerializer(typeof(ApplicationDataStore), knownTypes, 0x7FFF, false, true, null);
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace RemotePlanning.Ui.ViewModels
 {
+    [DataContract]
     public abstract class ViewModel : INotifyPropertyChanged
     {
         protected void FireOnPropertyChanged(string propertyName)

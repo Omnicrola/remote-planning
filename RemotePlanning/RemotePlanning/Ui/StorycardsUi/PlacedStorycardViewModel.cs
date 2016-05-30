@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using RemotePlanning.Ui.ViewModels;
 
 namespace RemotePlanning.Ui.StorycardsUi
 {
+    [DataContract]
     public class PlacedStorycardViewModel : ViewModel, IStorcardViewModel
     {
+        [DataMember]
         private StorycardViewModel wrappedStorycard;
 
         public PlacedStorycardViewModel(StorycardViewModel wrappedStorycard)
@@ -18,6 +21,8 @@ namespace RemotePlanning.Ui.StorycardsUi
             FireOnPropertyChanged(e.PropertyName);
         }
 
+
+        [DataMember]
         public int Order { get; set; }
 
         public string Role { get { return wrappedStorycard.Role; } set { } }

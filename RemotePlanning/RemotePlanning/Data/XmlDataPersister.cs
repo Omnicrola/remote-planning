@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml.Serialization;
-using RemotePlanning.Data.BusinessObjects;
+using RemotePlanning.Ui.ProjectsUi;
 
 namespace RemotePlanning.Data
 {
@@ -48,13 +47,5 @@ namespace RemotePlanning.Data
                 _xmlSerializer.WriteObject(fileStream, applicationData);
             }
         }
-    }
-
-    public class ApplicationDataStore
-    {
-        public List<Project> Projects = new List<Project>();
-        public List<Iteration> Iterations = new List<Iteration>();
-        public List<Storycard> Storycards = new List<Storycard>();
-        public List<PlanningSheet> PlanningSheets = new List<PlanningSheet>();
     }
 }

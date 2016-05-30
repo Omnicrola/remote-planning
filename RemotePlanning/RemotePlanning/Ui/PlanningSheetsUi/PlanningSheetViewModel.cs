@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Windows.Media;
 using RemotePlanning.Ui.StorycardsUi;
 using RemotePlanning.Ui.ViewModels;
 
 namespace RemotePlanning.Ui.PlanningSheetsUi
 {
+    [DataContract]
     public class PlanningSheetViewModel : ViewModel
     {
         private string _role;
@@ -15,13 +18,10 @@ namespace RemotePlanning.Ui.PlanningSheetsUi
 
         private bool _isNotCurrentlySorting;
 
-
         public PlanningSheetViewModel()
         {
             Color = Brushes.Green;
             PlannedCards = new ObservableCollection<PlacedStorycardViewModel>();
-            //            PlannedCards.CollectionChanged += SortPlannedCards;
-            //            _isNotCurrentlySorting = true;
         }
 
         private void SortPlannedCards(object sender, NotifyCollectionChangedEventArgs e)
@@ -36,7 +36,11 @@ namespace RemotePlanning.Ui.PlanningSheetsUi
             }
 
         }
+
+        [DataMember]
         public ObservableCollection<PlacedStorycardViewModel> PlannedCards { get; private set; }
+
+        [DataMember]
         public string Role
         {
             get { return _role; }
@@ -47,6 +51,13 @@ namespace RemotePlanning.Ui.PlanningSheetsUi
         {
             get { return _color; }
             set { SetPropertyField(ref _color, value); }
+        }
+
+        [DataMember]
+        public Color HexColor
+        {
+            get { return Color.Color; }
+            set { Color = new SolidColorBrush(value); }
         }
 
     }
