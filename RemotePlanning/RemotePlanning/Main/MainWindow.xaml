@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="Remote Planning" 
         WindowStartupLocation="CenterScreen"
-        d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+        d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
         Width="1024"
         Height="768">
     <Grid x:Name="WindowPanel">
@@ -27,6 +27,9 @@
             <Button Margin="5" Click="SelectIteration_OnClick" Content="{Binding SelectedIteration.IterationNumber}"/>
             <Button Margin="5" Click="AddCards_OnClick">Add Cards</Button>
             <Button Margin="5" Click="AddSheet_OnClick" >Add Sheet</Button>
+            <TextBlock Margin="5">Network</TextBlock>
+            <Button Margin="5" Click="NetworkConnect_OnClick">Connect</Button>
+            <Button Margin="5" Click="NetworkHost_OnClick">Start Host</Button>
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                       VerticalScrollBarVisibility="Disabled" 

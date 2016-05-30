@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using RemotePlanning.Iteration;
 using RemotePlanning.Main.GameCanvas;
+using RemotePlanning.Network;
 using RemotePlanning.PlanningSheets;
 using RemotePlanning.PlanningSheets.Control;
 using RemotePlanning.Storycards;
@@ -21,6 +22,7 @@ namespace RemotePlanning.Main
         private readonly CanvasElementHandler<StorycardControl> _storycardHandler;
         public event EventHandler<RoutedEventArgs> WindowLoaded;
         public event EventHandler<NetworkConnectEventArgs> NetworkConnect;
+        public event EventHandler<NetworkHostEventArgs> HostNetworkSession;
         public MainWindowViewModel ViewModel { get; private set; }
 
         public MainWindow()
@@ -103,6 +105,23 @@ namespace RemotePlanning.Main
         private void AddSheet_OnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.SelectedIteration.PlanningSheets.Add(new PlanningSheetViewModel());
+        }
+
+        private void NetworkConnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            var networkConnectWindow = new NetworkConnectWindow() { Owner = this };
+            networkConnectWindow.ConnectToServer += RaiseConnect;
+            networkConnectWindow.ShowDialog();
+        }
+
+        private void RaiseConnect(object sender, NetworkConnectEventArgs e)
+        {
+            NetworkConnect?.Invoke(sender, e);
+        }
+
+        private void NetworkHost_OnClick(object sender, RoutedEventArgs e)
+        {
+            HostNetworkSession?.Invoke(this, new NetworkHostEventArgs());
         }
     }
 }

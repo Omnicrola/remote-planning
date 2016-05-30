@@ -1,0 +1,14 @@
+﻿<Window x:Class="RemotePlanning.Network.NetworkConnectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RemotePlanning.Network"
+        mc:Ignorable="d"
+        Title="Network Connect" Height="94.068" Width="437.923">
+    <WrapPanel>
+        <TextBlock Margin="15">Server Address:</TextBlock>
+        <TextBox Margin="15" Width="200" Name="AddressTextbox"></TextBox>
+        <Button Margin="15" Click="Connect_OnClick">Connect</Button>
+    </WrapPanel>
+</Window>

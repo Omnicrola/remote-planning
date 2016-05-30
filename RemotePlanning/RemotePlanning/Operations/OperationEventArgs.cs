@@ -1,6 +1,6 @@
 namespace RemotePlanning.Commands
 {
-    internal class CommandQueue
+    public class OperationEventArgs
     {
     }
 }

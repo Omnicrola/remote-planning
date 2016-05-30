@@ -55,7 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\CommandQueue.cs" />
+    <Compile Include="Data\ConnectToServerOperation.cs" />
+    <Compile Include="Network\NetworkConnectWindow.xaml.cs">
+      <DependentUpon>NetworkConnectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Network\NetworkHostEventArgs.cs" />
+    <Compile Include="Network\NetworkManager.cs" />
+    <Compile Include="Operations\AsyncDiscreetOperation.cs" />
+    <Compile Include="Operations\IDiscreetOperation.cs" />
+    <Compile Include="Operations\OperationEventArgs.cs" />
+    <Compile Include="Operations\OperationQueue.cs" />
     <Compile Include="Data\PlanningGameManager.cs" />
     <Compile Include="Data\StubDataLoader.cs" />
     <Compile Include="Iteration\IterationViewModel.cs" />
@@ -73,6 +82,7 @@
     <Compile Include="Main\PlaceableStorycardViewModelFactory.cs" />
     <Compile Include="Main\SelectIterationViewModel.cs" />
     <Compile Include="Main\GameCanvas\IMoveableElement.cs" />
+    <Compile Include="Operations\StartNetworkHostingOperation.cs" />
     <Compile Include="PlanningSheets\Control\MouseDragHelper.cs" />
     <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
     <Compile Include="PlanningSheets\Control\PlanningSheetControl.xaml.cs">
@@ -106,6 +116,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Network\NetworkConnectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PlanningSheets\Control\PlanningSheetControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
