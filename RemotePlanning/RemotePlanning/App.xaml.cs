@@ -2,10 +2,11 @@
 using System.Threading;
 using System.Windows;
 using NetworkModel.Networking;
-using RemotePlanning.Commands;
 using RemotePlanning.Data;
-using RemotePlanning.Main;
 using RemotePlanning.Network;
+using RemotePlanning.Operations;
+using RemotePlanning.Ui.MainUi;
+using RemotePlanning.Ui.ViewModels;
 
 namespace RemotePlanning
 {
@@ -18,11 +19,20 @@ namespace RemotePlanning
         private void Application_Start(object sender, StartupEventArgs args)
         {
             var mainWindow = new MainWindow();
-            var commandQueue = new OperationsQueue(mainWindow.Dispatcher);
-            var networkManager = new NetworkManager();
-            var planningGameManager = new PlanningGameManager(mainWindow, commandQueue, networkManager, new StubDataLoader(mainWindow));
+            var planningGameManager = BuildPlanningGameManager(mainWindow);
             mainWindow.Closed += (s, e) => { planningGameManager.Dispose(); };
             mainWindow.Show();
+        }
+
+        private static PlanningGameManager BuildPlanningGameManager(MainWindow mainWindow)
+        {
+            var commandQueue = new OperationsQueue(mainWindow.Dispatcher);
+            var networkManager = new NetworkManager();
+            var stubDataLoader = new StubDataLoader();
+            var viewModelParser = new ViewModelParser();
+            var planningGameManager = new PlanningGameManager(mainWindow, commandQueue, networkManager, stubDataLoader,
+                viewModelParser);
+            return planningGameManager;
         }
     }
 }

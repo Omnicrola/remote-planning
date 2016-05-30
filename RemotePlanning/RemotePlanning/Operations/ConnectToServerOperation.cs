@@ -1,9 +1,8 @@
 using System;
 using NetworkModel.Networking;
 using RemotePlanning.Network;
-using RemotePlanning.Operations;
 
-namespace RemotePlanning.Data
+namespace RemotePlanning.Operations
 {
     internal class ConnectToServerOperation : IDiscreetOperation
     {

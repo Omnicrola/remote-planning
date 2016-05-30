@@ -40,10 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessObjects\Iteration.cs" />
-    <Compile Include="BusinessObjects\PlanningSheet.cs" />
-    <Compile Include="BusinessObjects\Project.cs" />
-    <Compile Include="BusinessObjects\Storycard.cs" />
     <Compile Include="Networking\NetworkConnection.cs" />
     <Compile Include="Networking\NetworkConstants.cs" />
     <Compile Include="Networking\NetworkClientConnection.cs" />

@@ -1,13 +1,9 @@
 using System;
 using System.Windows;
-using RemotePlanning.Commands;
-using RemotePlanning.Iteration;
-using RemotePlanning.Main;
 using RemotePlanning.Network;
 using RemotePlanning.Operations;
-using RemotePlanning.PlanningSheets;
-using RemotePlanning.Projects;
-using RemotePlanning.Storycards;
+using RemotePlanning.Ui.MainUi;
+using RemotePlanning.Ui.ViewModels;
 
 namespace RemotePlanning.Data
 {
@@ -16,20 +12,38 @@ namespace RemotePlanning.Data
         private readonly IMainWindow _mainWindow;
         private readonly OperationsQueue _operationQueue;
         private readonly NetworkManager _networkManager;
+        private readonly IDataPersister _dataPersister;
+        private readonly ViewModelParser _viewModelParser;
 
         public PlanningGameManager(IMainWindow mainWindow,
             OperationsQueue operationQueue,
             NetworkManager networkManager,
-            StubDataLoader stubDataLoader)
+            IDataPersister dataPersister,
+            ViewModelParser viewModelParser)
         {
             _mainWindow = mainWindow;
             _operationQueue = operationQueue;
             _networkManager = networkManager;
-            mainWindow.WindowLoaded += stubDataLoader.Window_OnLoaded;
+            _dataPersister = dataPersister;
+            _viewModelParser = viewModelParser;
+            mainWindow.WindowLoaded += LoadData;
+            mainWindow.WindowClosed += SaveData;
 
             mainWindow.NetworkConnect += WindowOnNetworkConnect;
             mainWindow.HostNetworkSession += WindowOnHostNetworkSession;
             _operationQueue.OperationStatus += Operation_OnStatusMessage;
+        }
+
+        private void SaveData(object sender, EventArgs e)
+        {
+            ApplicationDataStore dataStore = _viewModelParser.ExtractData();
+            _dataPersister.WriteData(dataStore);
+        }
+
+        private void LoadData(object sender, RoutedEventArgs e)
+        {
+            var applicationDataStore = _dataPersister.LoadData();
+            _viewModelParser.ClearAndLoad(applicationDataStore);
         }
 
         private void Operation_OnStatusMessage(object sender, OperationEventArgs e)

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using RemotePlanning.Main;
+using RemotePlanning.Ui.MainUi;
 
 namespace RemotePlanning.Network
 {

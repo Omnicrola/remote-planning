@@ -36,7 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +57,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\BusinessObjects\Iteration.cs" />
+    <Compile Include="Data\BusinessObjects\PlanningSheet.cs" />
+    <Compile Include="Data\BusinessObjects\Project.cs" />
+    <Compile Include="Data\BusinessObjects\Storycard.cs" />
+    <Compile Include="Data\IDataPersister.cs" />
+    <Compile Include="Data\XmlDataPersister.cs" />
     <Compile Include="Operations\ConnectToServerOperation.cs" />
     <Compile Include="Network\NetworkConnectWindow.xaml.cs">
       <DependentUpon>NetworkConnectWindow.xaml</DependentUpon>
@@ -66,44 +74,45 @@
     <Compile Include="Operations\OperationQueue.cs" />
     <Compile Include="Data\PlanningGameManager.cs" />
     <Compile Include="Data\StubDataLoader.cs" />
-    <Compile Include="Iteration\IterationViewModel.cs" />
-    <Compile Include="Iteration\SelectIterationWindow.xaml.cs">
+    <Compile Include="Ui\IterationUi\IterationViewModel.cs" />
+    <Compile Include="Ui\IterationUi\SelectIterationWindow.xaml.cs">
       <DependentUpon>SelectIterationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\GameCanvas\CanvasElementHandler.cs" />
-    <Compile Include="Main\CanvasZoomViewModel.cs" />
-    <Compile Include="Main\GameCanvas\ElementMovedEventArgs.cs" />
-    <Compile Include="Main\GameCanvas\IViewModelFactory.cs" />
-    <Compile Include="Main\IMainWindow.cs" />
-    <Compile Include="Main\MainWindowViewModel.cs" />
-    <Compile Include="Main\NetworkConnectEventArgs.cs" />
-    <Compile Include="Main\PassThroughViewModelFactory.cs" />
-    <Compile Include="Main\PlaceableStorycardViewModelFactory.cs" />
-    <Compile Include="Main\SelectIterationViewModel.cs" />
-    <Compile Include="Main\GameCanvas\IMoveableElement.cs" />
+    <Compile Include="Ui\MainUi\GameCanvas\CanvasElementHandler.cs" />
+    <Compile Include="Ui\MainUi\CanvasZoomViewModel.cs" />
+    <Compile Include="Ui\MainUi\GameCanvas\ElementMovedEventArgs.cs" />
+    <Compile Include="Ui\MainUi\GameCanvas\IViewModelFactory.cs" />
+    <Compile Include="Ui\MainUi\IMainWindow.cs" />
+    <Compile Include="Ui\MainUi\MainWindowViewModel.cs" />
+    <Compile Include="Ui\MainUi\NetworkConnectEventArgs.cs" />
+    <Compile Include="Ui\MainUi\PassThroughViewModelFactory.cs" />
+    <Compile Include="Ui\MainUi\PlaceableStorycardViewModelFactory.cs" />
+    <Compile Include="Ui\MainUi\SelectIterationViewModel.cs" />
+    <Compile Include="Ui\MainUi\GameCanvas\IMoveableElement.cs" />
     <Compile Include="Operations\StartNetworkHostingOperation.cs" />
-    <Compile Include="PlanningSheets\Control\MouseDragHelper.cs" />
-    <Compile Include="PlanningSheets\PlanningSheetViewModel.cs" />
-    <Compile Include="PlanningSheets\Control\PlanningSheetControl.xaml.cs">
+    <Compile Include="Ui\PlanningSheetsUi\Control\MouseDragHelper.cs" />
+    <Compile Include="Ui\PlanningSheetsUi\PlanningSheetViewModel.cs" />
+    <Compile Include="Ui\PlanningSheetsUi\Control\PlanningSheetControl.xaml.cs">
       <DependentUpon>PlanningSheetControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Projects\ProjectViewModel.cs" />
-    <Compile Include="Storycards\IStorcardViewModel.cs" />
-    <Compile Include="Storycards\PlacedStorycardViewModel.cs" />
-    <Compile Include="Storycards\StorycardBatchLoader.cs" />
-    <Compile Include="Storycards\StorycardBatchLoadWindow.xaml.cs">
+    <Compile Include="Ui\ProjectsUi\ProjectViewModel.cs" />
+    <Compile Include="Ui\StorycardsUi\IStorcardViewModel.cs" />
+    <Compile Include="Ui\StorycardsUi\PlacedStorycardViewModel.cs" />
+    <Compile Include="Ui\StorycardsUi\StorycardBatchLoader.cs" />
+    <Compile Include="Ui\StorycardsUi\StorycardBatchLoadWindow.xaml.cs">
       <DependentUpon>StorycardBatchLoadWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Storycards\StorycardViewModel.cs" />
-    <Compile Include="Storycards\Control\StorycardControl.xaml.cs">
+    <Compile Include="Ui\StorycardsUi\StorycardViewModel.cs" />
+    <Compile Include="Ui\StorycardsUi\Control\StorycardControl.xaml.cs">
       <DependentUpon>StorycardControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ViewModel.cs" />
-    <Page Include="Iteration\SelectIterationWindow.xaml">
+    <Compile Include="Ui\ViewModels\ViewModel.cs" />
+    <Compile Include="Ui\ViewModels\ViewModelParser.cs" />
+    <Page Include="Ui\IterationUi\SelectIterationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main\MainWindow.xaml">
+    <Page Include="Ui\MainUi\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -111,7 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Main\MainWindow.xaml.cs">
+    <Compile Include="Ui\MainUi\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -119,15 +128,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlanningSheets\Control\PlanningSheetControl.xaml">
+    <Page Include="Ui\PlanningSheetsUi\Control\PlanningSheetControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Storycards\Control\StorycardControl.xaml">
+    <Page Include="Ui\StorycardsUi\Control\StorycardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Storycards\StorycardBatchLoadWindow.xaml">
+    <Page Include="Ui\StorycardsUi\StorycardBatchLoadWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

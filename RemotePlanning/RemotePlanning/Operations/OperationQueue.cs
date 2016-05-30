@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
-using RemotePlanning.Operations;
 
-namespace RemotePlanning.Commands
+namespace RemotePlanning.Operations
 {
     internal class OperationsQueue
     {

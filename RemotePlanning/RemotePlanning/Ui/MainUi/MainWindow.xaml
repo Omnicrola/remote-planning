@@ -1,0 +1,52 @@
+﻿<Window x:Class="RemotePlanning.Ui.MainUi.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RemotePlanning"
+        mc:Ignorable="d"
+        Title="Remote Planning" 
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance main:MainWindowViewModel}"
+        Width="1024"
+        Height="768">
+    <Grid x:Name="WindowPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock Margin="5">Iteration</TextBlock>
+            <Button Margin="5" Click="SelectIteration_OnClick" Content="{Binding SelectedIteration.IterationNumber}"/>
+            <Button Margin="5" Click="AddCards_OnClick">Add Cards</Button>
+            <Button Margin="5" Click="AddSheet_OnClick" >Add Sheet</Button>
+            <TextBlock Margin="5">Network</TextBlock>
+            <Button Margin="5" Click="NetworkConnect_OnClick">Connect</Button>
+            <Button Margin="5" Click="NetworkHost_OnClick">Start Host</Button>
+        </StackPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+                      VerticalScrollBarVisibility="Disabled" 
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      x:Name="CanvasContainer">
+            <Canvas x:Name="GameCanvas" PreviewMouseWheel="Canvas_OnMouseWheel" Background="White" Width="5000" Height="2000">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="{Binding ZoomViewModel.ScaleX}" ScaleY="{Binding ZoomViewModel.ScaleY}"/>
+                        <TranslateTransform X="{Binding ZoomViewModel.OffsetX}" Y="{Binding ZoomViewModel.OffsetY}"/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+            </Canvas>
+        </ScrollViewer>
+        <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBlock FontSize="14" Name="StatusText" Text="Ready"/>
+        </StatusBar>
+    </Grid>
+</Window>
+
+
+
