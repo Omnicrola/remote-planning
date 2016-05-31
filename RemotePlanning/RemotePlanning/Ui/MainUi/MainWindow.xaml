@@ -26,10 +26,11 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel>
+            <Button Margin="5" Click="OpenProject_OnClick">Open Project</Button>
             <TextBlock Margin="5">Iteration</TextBlock>
             <Button Margin="5" Click="SelectIteration_OnClick" Content="{Binding SelectedIteration.IterationNumber}"/>
             <Button Margin="5" Click="AddCards_OnClick">Add Cards</Button>

@@ -10,6 +10,8 @@ namespace RemotePlanning.Ui.MainUi
         event EventHandler<EventArgs> WindowClosed;
         event EventHandler<NetworkConnectEventArgs> NetworkConnect;
         event EventHandler<NetworkHostEventArgs> HostNetworkSession;
+        event EventHandler<OpenFileEventArgs> OpenProject;
+
         MainWindowViewModel ViewModel { get; }
         void AddStatusMessage(string message);
     }

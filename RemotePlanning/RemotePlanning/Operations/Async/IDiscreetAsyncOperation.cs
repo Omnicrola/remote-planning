@@ -1,9 +1,8 @@
 using System;
-using System.Windows.Threading;
 
-namespace RemotePlanning.Operations
+namespace RemotePlanning.Operations.Async
 {
-    internal interface IDiscreetOperation
+    internal interface IDiscreetAsyncOperation
     {
         event EventHandler<OperationEventArgs> OperationStatus;
 

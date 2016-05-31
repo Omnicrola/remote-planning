@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
 using RemotePlanning.Network;
 using RemotePlanning.Ui.IterationUi;
 using RemotePlanning.Ui.MainUi.GameCanvas;
@@ -26,6 +28,7 @@ namespace RemotePlanning.Ui.MainUi
         public event EventHandler<EventArgs> WindowClosed;
         public event EventHandler<NetworkConnectEventArgs> NetworkConnect;
         public event EventHandler<NetworkHostEventArgs> HostNetworkSession;
+        public event EventHandler<OpenFileEventArgs> OpenProject;
 
         public MainWindow()
         {
@@ -157,5 +160,13 @@ namespace RemotePlanning.Ui.MainUi
         }
 
 
+        private void OpenProject_OnClick(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog { Filter = "Planning Game File (*.rplg)|*.rplg" };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                OpenProject?.Invoke(this, new OpenFileEventArgs(openFileDialog.FileName));
+            }
+        }
     }
 }

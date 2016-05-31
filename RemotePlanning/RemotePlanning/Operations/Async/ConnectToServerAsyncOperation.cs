@@ -2,15 +2,16 @@ using System;
 using NetworkModel.Networking;
 using RemotePlanning.Network;
 
-namespace RemotePlanning.Operations
+namespace RemotePlanning.Operations.Async
 {
-    internal class ConnectToServerOperation : IDiscreetOperation
+    internal class ConnectToServerAsyncOperation : IDiscreetAsyncOperation
     {
         private readonly NetworkManager _networkManager;
         private readonly string _address;
         public string Description => "Connect to remote server";
+        public bool IsAsync => true;
 
-        public ConnectToServerOperation(NetworkManager networkManager, string address)
+        public ConnectToServerAsyncOperation(NetworkManager networkManager, string address)
         {
             _networkManager = networkManager;
             _address = address;

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
+using RemotePlanning.Operations.Async;
+using RemotePlanning.Operations.Synchronous;
 
 namespace RemotePlanning.Operations
 {
@@ -9,8 +11,10 @@ namespace RemotePlanning.Operations
     {
         private readonly object MUTEX = new object();
 
-        private readonly Queue<IDiscreetOperation> _operationsToDo = new Queue<IDiscreetOperation>();
-        private readonly Queue<IDiscreetOperation> _newOperations = new Queue<IDiscreetOperation>();
+        private readonly Queue<IDiscreetAsyncOperation> _operationsToDo = new Queue<IDiscreetAsyncOperation>();
+        private readonly Queue<IDiscreetAsyncOperation> _newOperations = new Queue<IDiscreetAsyncOperation>();
+        private readonly Queue<IDiscreetSynchronousOperation> _synchronousOperations = new Queue<IDiscreetSynchronousOperation>();
+
         private readonly Dispatcher _mainThreadDispatcher;
         private readonly Thread _thread;
         private bool _isRunning;
@@ -29,11 +33,18 @@ namespace RemotePlanning.Operations
 
         }
 
-        public void AddOperation(IDiscreetOperation operation)
+        public void AddOperation(IDiscreetAsyncOperation asyncOperation)
         {
             lock (MUTEX)
             {
-                _newOperations.Enqueue(operation);
+                _newOperations.Enqueue(asyncOperation);
+            }
+        }
+        public void AddOperation(IDiscreetSynchronousOperation syncOperation)
+        {
+            lock (MUTEX)
+            {
+                _synchronousOperations.Enqueue(syncOperation);
             }
         }
 
@@ -55,7 +66,18 @@ namespace RemotePlanning.Operations
                 {
                     _operationsToDo.Enqueue(_newOperations.Dequeue());
                 }
+                while (_synchronousOperations.Count > 0)
+                {
+                    _mainThreadDispatcher.Invoke(() => ExecuteSyncTask(_synchronousOperations.Dequeue()));
+                }
             }
+        }
+
+        private void ExecuteSyncTask(IDiscreetSynchronousOperation operation)
+        {
+            operation.OperationStatus += SendStatusUpdate;
+            operation.DoWork();
+            operation.OperationStatus -= SendStatusUpdate;
         }
 
         private void ProcessNextTask()

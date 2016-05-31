@@ -7,8 +7,7 @@ namespace RemotePlanning.Data
 {
     public class ApplicationDataStore
     {
-        public List<ProjectViewModel> Projects = new List<ProjectViewModel>();
         public IterationViewModel SelectedIteration;
-        public ProjectViewModel SelectedProject;
+        public ProjectViewModel Project;
     }
 }

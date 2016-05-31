@@ -2,6 +2,8 @@ using System;
 using System.Windows;
 using RemotePlanning.Network;
 using RemotePlanning.Operations;
+using RemotePlanning.Operations.Async;
+using RemotePlanning.Operations.Synchronous;
 using RemotePlanning.Ui.MainUi;
 using RemotePlanning.Ui.ViewModels;
 
@@ -26,12 +28,22 @@ namespace RemotePlanning.Data
             _networkManager = networkManager;
             _dataPersister = dataPersister;
             _viewModelParser = viewModelParser;
+
             mainWindow.WindowLoaded += LoadData;
             mainWindow.WindowClosed += SaveData;
 
             mainWindow.NetworkConnect += WindowOnNetworkConnect;
             mainWindow.HostNetworkSession += WindowOnHostNetworkSession;
+
+            mainWindow.OpenProject += Window_OnOpenProject;
+
             _operationQueue.OperationStatus += Operation_OnStatusMessage;
+        }
+
+        private void Window_OnOpenProject(object sender, OpenFileEventArgs e)
+        {
+            var openProjectOperation = new OpenProjectOperation(e.FileName, new ViewModelParser(_mainWindow), XmlSerializerFactoy.Create());
+            _operationQueue.AddOperation(openProjectOperation);
         }
 
         private void SaveData(object sender, EventArgs e)
@@ -53,13 +65,13 @@ namespace RemotePlanning.Data
 
         private void WindowOnHostNetworkSession(object sender, NetworkHostEventArgs e)
         {
-            var startNetworkHostingOperation = new StartNetworkHostingOperation(_networkManager);
+            var startNetworkHostingOperation = new StartNetworkHostingAsyncOperation(_networkManager);
             _operationQueue.AddOperation(startNetworkHostingOperation);
         }
 
         private void WindowOnNetworkConnect(object sender, NetworkConnectEventArgs eventArgs)
         {
-            var connectToServerOperation = new ConnectToServerOperation(_networkManager, eventArgs.Address);
+            var connectToServerOperation = new ConnectToServerAsyncOperation(_networkManager, eventArgs.Address);
             _operationQueue.AddOperation(connectToServerOperation);
         }
 

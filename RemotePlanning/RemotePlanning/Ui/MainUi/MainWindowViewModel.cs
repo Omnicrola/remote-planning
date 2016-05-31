@@ -10,7 +10,6 @@ namespace RemotePlanning.Ui.MainUi
         private ProjectViewModel _selectedProject;
         private IterationViewModel _selectedIteration;
         public CanvasZoomViewModel ZoomViewModel { get; }
-        public ObservableCollection<ProjectViewModel> Projects { get; private set; }
 
         public ProjectViewModel SelectedProject
         {
@@ -27,7 +26,6 @@ namespace RemotePlanning.Ui.MainUi
         public MainWindowViewModel(CanvasZoomViewModel canvasZoomViewModel)
         {
             this.ZoomViewModel = canvasZoomViewModel;
-            Projects = new ObservableCollection<ProjectViewModel>();
         }
     }
 }
