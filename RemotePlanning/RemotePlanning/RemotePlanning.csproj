@@ -78,6 +78,9 @@
     <Compile Include="Data\PlanningGameManager.cs" />
     <Compile Include="Data\StubDataLoader.cs" />
     <Compile Include="Operations\Synchronous\IDiscreetSynchronousOperation.cs" />
+    <Compile Include="Ui\EditableLabel.xaml.cs">
+      <DependentUpon>EditableLabel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ui\IterationUi\IterationViewModel.cs" />
     <Compile Include="Ui\IterationUi\SelectIterationWindow.xaml.cs">
       <DependentUpon>SelectIterationWindow.xaml</DependentUpon>
@@ -114,6 +117,10 @@
     </Compile>
     <Compile Include="Ui\ViewModels\ViewModel.cs" />
     <Compile Include="Ui\ViewModels\ViewModelParser.cs" />
+    <Page Include="Ui\EditableLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Ui\IterationUi\SelectIterationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

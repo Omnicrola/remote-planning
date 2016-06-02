@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:storycardsUi="clr-namespace:RemotePlanning.Ui.StorycardsUi"
+             xmlns:ui="clr-namespace:RemotePlanning.Ui"
              mc:Ignorable="d" 
              Canvas.Left="{Binding CanvasX}"
              Canvas.Top="{Binding CanvasY}"
@@ -59,7 +60,8 @@
             <TextBlock FontSize="14" Text="{Binding RelativeSource={RelativeSource AncestorType=Canvas}, Path=DataContext.SelectedProject.Name}"/>
             <TextBlock FontSize="14" Text="{Binding Role}"/>
         </StackPanel>
-        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Title}"/>
+        <!--        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap" Clip="" Text="{Binding Title}"/>-->
+        <ui:EditableLabel Grid.Row="0" Grid.Column="1" FontSize="18" Text="{Binding Title}"/>
         <TextBlock Grid.Row="0" Grid.Column="2" FontSize="28" HorizontalAlignment="Center" Text="{Binding Estimate}"/>
         <TextBlock Grid.Row="1" 
                                Grid.Column="0" 
