@@ -26,6 +26,12 @@ namespace RemotePlanning.Ui.MainUi
         public MainWindowViewModel(CanvasZoomViewModel canvasZoomViewModel)
         {
             this.ZoomViewModel = canvasZoomViewModel;
+            var projectViewModel = new ProjectViewModel();
+            var iterationViewModel = new IterationViewModel();
+            projectViewModel.Iterations.Add(_selectedIteration);
+
+            _selectedIteration = iterationViewModel;
+            _selectedProject = projectViewModel;
         }
     }
 }

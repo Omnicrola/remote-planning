@@ -105,6 +105,7 @@
       <DependentUpon>PlanningSheetControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ui\ProjectsUi\ProjectViewModel.cs" />
+    <Compile Include="Ui\StorycardsUi\BatchStorycardTextParser.cs" />
     <Compile Include="Ui\StorycardsUi\IStorcardViewModel.cs" />
     <Compile Include="Ui\StorycardsUi\PlacedStorycardViewModel.cs" />
     <Compile Include="Ui\StorycardsUi\StorycardBatchLoader.cs" />

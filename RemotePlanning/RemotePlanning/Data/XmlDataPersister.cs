@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml.Serialization;
+using RemotePlanning.Ui.IterationUi;
 using RemotePlanning.Ui.ProjectsUi;
 
 namespace RemotePlanning.Data
@@ -28,7 +29,7 @@ namespace RemotePlanning.Data
                     return dataStore;
                 }
             }
-            return new ApplicationDataStore();
+            return new ApplicationDataStore { Project = new ProjectViewModel(), SelectedIteration = new IterationViewModel() };
         }
 
         public void WriteData(ApplicationDataStore applicationData)

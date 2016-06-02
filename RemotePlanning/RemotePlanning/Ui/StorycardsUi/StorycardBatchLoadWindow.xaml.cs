@@ -45,26 +45,4 @@ namespace RemotePlanning.Ui.StorycardsUi
             Storycards = storycards;
         }
     }
-
-    public class BatchStorycardTextParser
-    {
-        public List<StorycardViewModel> Parse(string text)
-        {
-            return new List<StorycardViewModel>()
-            {
-                new StorycardViewModel
-                {
-                    Estimate = 7,
-                    Role = "DEV",
-                    Title = "Hello Storycards! 2222"
-                },
-                new StorycardViewModel
-                {
-                    Estimate = 8,
-                    Role = "DEV",
-                    Title = "Hello Storycards!"
-                }
-            };
-        }
-    }
 }

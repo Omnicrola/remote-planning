@@ -13,12 +13,20 @@ namespace RemotePlanning.Ui.StorycardsUi
         private double _canvasX;
         private double _canvasY;
         private int _zIndex;
+        private string _number;
 
         [DataMember]
         public string Role
         {
             get { return _role; }
             set { SetPropertyField(ref _role, value); }
+        }
+
+        [DataMember]
+        public string Number
+        {
+            get { return _number; }
+            set { SetPropertyField(ref _number, value); }
         }
 
         [DataMember]

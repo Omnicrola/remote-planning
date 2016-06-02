@@ -8,7 +8,7 @@ namespace RemotePlanning.Ui.StorycardsUi
     public class PlacedStorycardViewModel : ViewModel, IStorcardViewModel
     {
         [DataMember]
-        private StorycardViewModel wrappedStorycard;
+        private StorycardViewModel _wrappedStorycard;
 
         private double _canvasX;
         private double _canvasY;
@@ -16,7 +16,7 @@ namespace RemotePlanning.Ui.StorycardsUi
 
         public PlacedStorycardViewModel(StorycardViewModel wrappedStorycard)
         {
-            this.wrappedStorycard = wrappedStorycard;
+            this._wrappedStorycard = wrappedStorycard;
             wrappedStorycard.PropertyChanged += PropertyChangePassThrough;
         }
 
@@ -29,10 +29,11 @@ namespace RemotePlanning.Ui.StorycardsUi
         [DataMember]
         public int Order { get; set; }
 
-        public string Role { get { return wrappedStorycard.Role; } set { } }
-        public string Title { get { return wrappedStorycard.Title; } set { } }
-        public string Content { get { return wrappedStorycard.Content; } set { } }
-        public int Estimate { get { return wrappedStorycard.Estimate; } set { } }
+        public string Role { get { return _wrappedStorycard.Role; } set { } }
+        public string Number { get { return _wrappedStorycard.Number; } set { } }
+        public string Title { get { return _wrappedStorycard.Title; } set { } }
+        public string Content { get { return _wrappedStorycard.Content; } set { } }
+        public int Estimate { get { return _wrappedStorycard.Estimate; } set { } }
 
         [DataMember]
         public double CanvasX
