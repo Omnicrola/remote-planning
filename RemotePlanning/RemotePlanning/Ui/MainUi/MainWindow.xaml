@@ -31,13 +31,14 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <Button Margin="5" Click="OpenProject_OnClick">Open Project</Button>
+            <Button Margin="5" Click="SaveProject_OnClick">Save Project</Button>
             <TextBlock Margin="5">Iteration</TextBlock>
             <Button Margin="5" Click="SelectIteration_OnClick" Content="{Binding SelectedIteration.IterationNumber}"/>
             <Button Margin="5" Click="AddCards_OnClick">Add Cards</Button>
             <Button Margin="5" Click="AddSheet_OnClick" >Add Sheet</Button>
-            <TextBlock Margin="5">Network</TextBlock>
-            <Button Margin="5" Click="NetworkConnect_OnClick">Connect</Button>
-            <Button Margin="5" Click="NetworkHost_OnClick">Start Host</Button>
+            <!--            <TextBlock Margin="5">Network</TextBlock>-->
+            <!--            <Button Margin="5" Click="NetworkConnect_OnClick">Connect</Button>-->
+            <!--            <Button Margin="5" Click="NetworkHost_OnClick">Start Host</Button>-->
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                       VerticalScrollBarVisibility="Disabled" 
@@ -66,6 +67,10 @@
         </StatusBar>
     </Grid>
 </Window>
+
+
+
+
 
 
 

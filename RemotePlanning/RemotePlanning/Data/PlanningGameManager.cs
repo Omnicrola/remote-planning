@@ -29,33 +29,33 @@ namespace RemotePlanning.Data
             _dataPersister = dataPersister;
             _viewModelParser = viewModelParser;
 
-            mainWindow.WindowLoaded += LoadData;
             mainWindow.WindowClosed += SaveData;
 
             mainWindow.NetworkConnect += WindowOnNetworkConnect;
             mainWindow.HostNetworkSession += WindowOnHostNetworkSession;
 
             mainWindow.OpenProject += Window_OnOpenProject;
+            mainWindow.SaveProject += Window_OnSaveProject;
 
             _operationQueue.OperationStatus += Operation_OnStatusMessage;
         }
 
-        private void Window_OnOpenProject(object sender, OpenFileEventArgs e)
+        private void Window_OnOpenProject(object sender, FileEventArgs e)
         {
             var openProjectOperation = new OpenProjectOperation(e.FileName, new ViewModelParser(_mainWindow), XmlSerializerFactoy.Create());
             _operationQueue.AddOperation(openProjectOperation);
+        }
+
+        private void Window_OnSaveProject(object sender, FileEventArgs e)
+        {
+            var saveProjectOperation = new SaveProjectOperation(e.FileName, new ViewModelParser(_mainWindow), XmlSerializerFactoy.Create());
+            _operationQueue.AddOperation(saveProjectOperation);
         }
 
         private void SaveData(object sender, EventArgs e)
         {
             ApplicationDataStore dataStore = _viewModelParser.ExtractData();
             _dataPersister.WriteData(dataStore);
-        }
-
-        private void LoadData(object sender, RoutedEventArgs e)
-        {
-            var applicationDataStore = _dataPersister.LoadData();
-            _viewModelParser.ClearAndLoad(applicationDataStore);
         }
 
         private void Operation_OnStatusMessage(object sender, OperationEventArgs e)

@@ -15,7 +15,6 @@ namespace RemotePlanning.Operations.Synchronous
 
         public event EventHandler<OperationEventArgs> OperationStatus;
         public string Description => "Open project file";
-        public bool IsAsync => true;
 
         public OpenProjectOperation(string filename, ViewModelParser viewModelParser, DataContractSerializer xmlSerializer)
         {
@@ -26,16 +25,11 @@ namespace RemotePlanning.Operations.Synchronous
 
         public void DoWork()
         {
-            try
+            using (var fileStream = File.Open(_filename, FileMode.Open, FileAccess.Read))
             {
-                var fileStream = File.Open(_filename, FileMode.Open, FileAccess.Read);
                 ApplicationDataStore applicationData = (ApplicationDataStore)_xmlSerializer.ReadObject(fileStream);
                 _viewModelParser.ClearAndLoad(applicationData);
                 OperationStatus?.Invoke(this, new OperationEventArgs("Project loaded!"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("OOps");
             }
         }
 

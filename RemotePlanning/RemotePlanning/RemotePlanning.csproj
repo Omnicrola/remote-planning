@@ -72,6 +72,7 @@
     <Compile Include="Network\NetworkHostEventArgs.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Operations\Async\IDiscreetAsyncOperation.cs" />
+    <Compile Include="Operations\Async\SaveProjectOperation.cs" />
     <Compile Include="Operations\Synchronous\OpenProjectOperation.cs" />
     <Compile Include="Operations\OperationEventArgs.cs" />
     <Compile Include="Operations\OperationQueue.cs" />
@@ -92,7 +93,7 @@
     <Compile Include="Ui\MainUi\IMainWindow.cs" />
     <Compile Include="Ui\MainUi\MainWindowViewModel.cs" />
     <Compile Include="Ui\MainUi\NetworkConnectEventArgs.cs" />
-    <Compile Include="Ui\MainUi\OpenFileEventArgs.cs" />
+    <Compile Include="Ui\MainUi\FileEventArgs.cs" />
     <Compile Include="Ui\MainUi\PassThroughViewModelFactory.cs" />
     <Compile Include="Ui\MainUi\PlaceableStorycardViewModelFactory.cs" />
     <Compile Include="Ui\MainUi\SelectIterationViewModel.cs" />

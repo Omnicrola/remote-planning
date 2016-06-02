@@ -28,7 +28,8 @@ namespace RemotePlanning.Ui.MainUi
         public event EventHandler<EventArgs> WindowClosed;
         public event EventHandler<NetworkConnectEventArgs> NetworkConnect;
         public event EventHandler<NetworkHostEventArgs> HostNetworkSession;
-        public event EventHandler<OpenFileEventArgs> OpenProject;
+        public event EventHandler<FileEventArgs> OpenProject;
+        public event EventHandler<FileEventArgs> SaveProject;
 
         public MainWindow()
         {
@@ -165,7 +166,16 @@ namespace RemotePlanning.Ui.MainUi
             var openFileDialog = new OpenFileDialog { Filter = "Planning Game File (*.rplg)|*.rplg" };
             if (openFileDialog.ShowDialog() == true)
             {
-                OpenProject?.Invoke(this, new OpenFileEventArgs(openFileDialog.FileName));
+                OpenProject?.Invoke(this, new FileEventArgs(openFileDialog.FileName));
+            }
+        }
+
+        private void SaveProject_OnClick(object sender, RoutedEventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog() { Filter = "Planning Game File (*.rplg)|*.rplg" };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveProject?.Invoke(this, new FileEventArgs(saveFileDialog.FileName));
             }
         }
     }
