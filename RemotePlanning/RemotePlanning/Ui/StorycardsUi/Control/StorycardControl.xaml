@@ -60,9 +60,8 @@
             <TextBlock FontSize="14" Text="{Binding RelativeSource={RelativeSource AncestorType=Canvas}, Path=DataContext.SelectedProject.Name}"/>
             <TextBlock FontSize="14" Text="{Binding Role}"/>
         </StackPanel>
-        <!--        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="18" VerticalAlignment="Center" TextWrapping="Wrap" Clip="" Text="{Binding Title}"/>-->
-        <ui:EditableLabel Grid.Row="0" Grid.Column="1" FontSize="18" Text="{Binding Title}"/>
-        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="28" HorizontalAlignment="Center" Text="{Binding Estimate}"/>
+        <ui:EditableLabel Grid.Row="0" Grid.Column="1" FontSize="18" Text="{Binding Title}" VerticalAlignment="Center"/>
+        <ui:EditableLabel Grid.Row="0" Grid.Column="2" FontSize="28" Text="{Binding Estimate}" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" 
                                Grid.Column="0" 
                                Margin="25,10,25,10"

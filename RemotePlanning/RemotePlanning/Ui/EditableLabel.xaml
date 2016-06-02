@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance local:EditableLabel}"
              d:DesignHeight="100" d:DesignWidth="300">
-    <Grid>
+    <Grid Name="LayoutRoot">
         <TextBox Text="{Binding Text}" 
                  Name="EditingBox"
                  KeyUp="Text_OnKeyUp"
@@ -27,8 +27,7 @@
                 Name="DisplayText"
                 HorizontalContentAlignment="Left" 
                 Padding="4" 
-                MouseDoubleClick="Text_OnDoubleClick"
-                FontSize="{Binding FontSize}">
+                MouseDoubleClick="Text_OnDoubleClick">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Visibility" Value="Visible"/>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace RemotePlanning.Ui
         public EditableLabel()
         {
             InitializeComponent();
-            DataContext = this;
+            LayoutRoot.DataContext = this;
         }
 
         public string Text
@@ -26,7 +27,6 @@ namespace RemotePlanning.Ui
             get { return (string)base.GetValue(TextProperty); }
             set { base.SetValue(TextProperty, value); }
         }
-
         public bool IsEditing
         {
             get { return _isEditing; }
@@ -40,8 +40,9 @@ namespace RemotePlanning.Ui
         }
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(EditableLabel), new PropertyMetadata(""));
-
+            "Text",
+            typeof(string),
+            typeof(EditableLabel));
 
         private void Text_OnDoubleClick(object sender, MouseButtonEventArgs e)
         {
