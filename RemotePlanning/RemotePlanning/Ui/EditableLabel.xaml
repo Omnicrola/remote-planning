@@ -11,7 +11,7 @@
         <TextBox Text="{Binding Text}" 
                  Name="EditingBox"
                  KeyUp="Text_OnKeyUp"
-                 VerticalContentAlignment="Center">
+                 VerticalContentAlignment="Top">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -23,26 +23,25 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button Content="{Binding Text}" 
+        <TextBlock  
+                MouseDown="Text_OnMouseDown"
                 Name="DisplayText"
-                HorizontalContentAlignment="Left" 
                 Padding="4" 
-                MouseDoubleClick="Text_OnDoubleClick">
-            <Button.Style>
-                <Style TargetType="Button">
+                Text="{Binding Text}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Visible"/>
                     <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderBrush" Value="Transparent"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsEditing}" Value="True">
                             <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsMouseOver}" Value="True">
-                            <Setter Property="BorderBrush" Value="Black"/>
-                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#22AAAAAA"/>
+                        </Trigger>
                     </Style.Triggers>
                 </Style>
-            </Button.Style>
-        </Button>
+            </TextBlock.Style>
+        </TextBlock>
     </Grid>
 </UserControl>

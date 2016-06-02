@@ -58,15 +58,14 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock FontSize="14" Text="{Binding RelativeSource={RelativeSource AncestorType=Canvas}, Path=DataContext.SelectedProject.Name}"/>
-            <TextBlock FontSize="14" Text="{Binding Role}"/>
+            <ui:EditableLabel FontSize="14" Text="{Binding Role}"/>
         </StackPanel>
         <ui:EditableLabel Grid.Row="0" Grid.Column="1" FontSize="18" Text="{Binding Title}" VerticalAlignment="Center"/>
         <ui:EditableLabel Grid.Row="0" Grid.Column="2" FontSize="28" Text="{Binding Estimate}" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="1" 
-                               Grid.Column="0" 
-                               Margin="25,10,25,10"
-                               TextWrapping="Wrap"
-                               Grid.ColumnSpan="3"
-                               Text="{Binding Content}"/>
+        <ui:EditableLabel Grid.Row="1" 
+                          Grid.Column="0" 
+                          Grid.ColumnSpan="3"
+                          Margin="25,10,25,10"
+                          Text="{Binding Content}"/>
     </Grid>
 </UserControl>

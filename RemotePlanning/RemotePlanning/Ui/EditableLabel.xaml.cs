@@ -44,11 +44,14 @@ namespace RemotePlanning.Ui
             typeof(string),
             typeof(EditableLabel));
 
-        private void Text_OnDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Text_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            ChangedText = Text;
-            IsEditing = true;
-            EditingBox.Focus();
+            if (e.ClickCount == 2)
+            {
+                ChangedText = Text;
+                IsEditing = true;
+                EditingBox.Focus();
+            }
         }
 
         private void Text_OnKeyUp(object sender, KeyEventArgs e)
